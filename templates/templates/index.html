@@ -25,29 +25,32 @@
 <body>
     <template id="main">
         <v-ons-splitter>
-            <v-ons-splitter-side swipeable width="150px" collapse="" side="left" :open.sync="openSide">
+            <v-ons-splitter-side swipeable width="100%" collapse="" side="left" :open.sync="openSide">
                 <v-ons-page>
+                    <input type="search" value="" placeholder="Search" class="search-input search-input--material"
+                        style="width:90%;margin-inline-start: 5%;margin-inline-end: 5%">
                     <v-ons-list>
-                        <v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
-                            <div class="center">{{ page }}</div>
+                        <v-ons-list-item v-for="pagefull,page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                            <div class="center">{{ pagefull }}</div>
                         </v-ons-list-item>
                     </v-ons-list>
                 </v-ons-page>
             </v-ons-splitter-side>
 
             <v-ons-splitter-content>
-                <component :is="currentPage" :toggle-menu="() => openSide = !openSide"></component>
+                <component :is="currentPage" :title="currentPage" :titlefull="pages" :toggle-menu="() => openSide = !openSide"
+                    :pay-menu="() => currentPage = 'food'"></component>
             </v-ons-splitter-content>
         </v-ons-splitter>
     </template>
 
     <template id="home">
         <v-ons-page>
-            <custom-toolbar title="Home" :action="toggleMenu"></custom-toolbar>
+            <custom-toolbar title="Home" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <p style="text-align: center">
                 Welcome home.
             </p>
-            
+
             <p style="text-align: center">
                 Your registered events
             </p>
@@ -128,15 +131,109 @@
                     </ons-col>
                 </ons-row>
             </v-ons-card>
+
+            <p style="text-align: center">
+                Functions
+            </p>
+            <ons-row>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/food.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/library.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/faulty.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/bus.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/booking.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/bike.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/clinic.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+            </ons-row>
         </v-ons-page>
     </template>
 
-    <template id="settings">
+    <template id="food">
         <v-ons-page>
-            <custom-toolbar title="Settings" :action="toggleMenu"></custom-toolbar>
+            <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <p style="text-align: center">
-                Change the settings.
+                Food payment.
             </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="temp">
+        <v-ons-page>
+            <custom-toolbar :title="title" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                {{ titlefull[title] }}.
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
         </v-ons-page>
     </template>
 
@@ -148,6 +245,11 @@
                 </v-ons-toolbar-button>
             </div>
             <div class="center">{{ title }}</div>
+            <div class="right">
+                <v-ons-toolbar-button @click="pay">
+                    <v-ons-icon icon="wallet"></v-ons-icon>
+                </v-ons-toolbar-button>
+            </div>
         </v-ons-toolbar>
     </template>
 
