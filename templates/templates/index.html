@@ -9,6 +9,10 @@
     <link rel="icon" href="">
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
 
     <link href="static/css/index.css" rel="stylesheet">
 
@@ -16,12 +20,54 @@
 </head>
 
 <body>
-    <div id="app">
-        <div class="full-width center-content">
-            <hello-component v-bind:message="message" />
-        </div>
-    </div>
-    <script src="static/js/components/helloComponent.js"></script>
+    <template id="main">
+        <v-ons-splitter>
+            <v-ons-splitter-side swipeable width="150px" collapse="" side="left" :open.sync="openSide">
+                <v-ons-page>
+                    <v-ons-list>
+                        <v-ons-list-item v-for="page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                            <div class="center">{{ page }}</div>
+                        </v-ons-list-item>
+                    </v-ons-list>
+                </v-ons-page>
+            </v-ons-splitter-side>
+
+            <v-ons-splitter-content>
+                <component :is="currentPage" :toggle-menu="() => openSide = !openSide"></component>
+            </v-ons-splitter-content>
+        </v-ons-splitter>
+    </template>
+
+    <template id="home">
+        <v-ons-page>
+            <custom-toolbar title="Home" :action="toggleMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Welcome home.
+            </p>
+        </v-ons-page>
+    </template>
+
+    <template id="settings">
+        <v-ons-page>
+            <custom-toolbar title="Settings" :action="toggleMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Change the settings.
+            </p>
+        </v-ons-page>
+    </template>
+
+    <template id="toolbar">
+        <v-ons-toolbar>
+            <div class="left">
+                <v-ons-toolbar-button @click="action">
+                    <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+                </v-ons-toolbar-button>
+            </div>
+            <div class="center">{{ title }}</div>
+        </v-ons-toolbar>
+    </template>
+
+    <div id="app"></div>
     <script src="static/js/index.js"></script>
 </body>
 

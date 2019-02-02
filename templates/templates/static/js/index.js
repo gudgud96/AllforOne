@@ -1,10 +1,32 @@
+const customToolbar = {
+  template: '#toolbar',
+  props: ['title', 'action']
+};
+
+const homePage = {
+  template: '#home',
+  props: ['toggleMenu'],
+  components: { customToolbar }
+};
+
+const settingsPage = {
+  template: '#settings',
+  props: ['toggleMenu'],
+  components: { customToolbar }
+};
+
 new Vue({
   el: '#app',
-  data:{
-    message: 'Hello World'
+  template: '#main',
+  data() {
+    return {
+      currentPage: 'home',
+      pages: ['home', 'settings'],
+      openSide: false
+    };
   },
   components: {
-    helloComponent: helloComponent
+    home: homePage,
+    settings: settingsPage,
   }
-})
-
+});
