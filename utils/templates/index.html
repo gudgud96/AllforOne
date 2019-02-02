@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>Live chat </title>
+		<link rel="shortcut icon" type="image/x-icon" href="./static/img/icon.jpg" />
+  <link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
+
+  <body>
+	<div class="ui">
+		<div class="left-menu">
+			<form action="#" class="search">
+				<input placeholder="search..." type="search" name="" id="">
+				<input type="submit" value="&#xf002;">
+			</form>
+			<div id="user-list">
+      </div>
+		</div>
+		<div id="app">
+		</div>
+	</div>
+  <script type="text/javascript" src="{{url_for('.static', filename='index.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='signup.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='login.js')}}"></script></body>
+</html>
