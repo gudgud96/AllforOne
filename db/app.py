@@ -73,6 +73,18 @@ class Event(db.Model):
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+class UserTracker(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    timestamp = db.Column(db.DateTime , index=True,default=datetime.datetime.now())
+    purchase = db.Column(db.Boolean)
+    activity = db.Column(db.Boolean)
+    description = db.Column(db.String(140))
+    user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
+    event_time = db.Column(db.DateTime)
+    
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+    
 
 # ================= Web Forms ==================== #
 class LoginForm(FlaskForm):
