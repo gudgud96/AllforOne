@@ -1,6 +1,5 @@
 from flask import Flask, render_template, Response, jsonify
 from multiprocessing import Process, Queue
-import FaceRecog
 
 if __name__ == '__main__':
     app = Flask(__name__)
@@ -11,7 +10,7 @@ if __name__ == '__main__':
 
     @app.route('/')
     def index():
-        return render_template('index.html')
+        return render_template('main.html')
 
     @app.route('/video_feed')
     def video_feed():
