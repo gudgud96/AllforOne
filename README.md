@@ -4,8 +4,8 @@ A webapp that connects all services with one click away.
 
 # Run instruction:
 Make sure pipenv is installed
-- pipenv install
+ pipenv install
 For example, 
-- export FLASK_APP=app.py
-- pipenv shell
-- flask run
+ export FLASK_APP=app.py
+ pipenv shell
+ flask run
