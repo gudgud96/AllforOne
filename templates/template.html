@@ -11,78 +11,22 @@
     <title>《列車旅行·首站》</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/starter-template.css" rel="stylesheet">
+    <link href="static/css/starter-template.css" rel="stylesheet">
 
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script>
-        $(function() {
-            var availableTags = [
-                "Gan Wei Han",
-                "Tan Jia Le",
-                "Ng Li Shiuan",
-                "Chang Yong Wei",
-                "Chan Xian Yang",
-                "Tay Jean Chien",
-                "Teoh Ming Xuan",
-                "Lee Chan Hui",
-                "Poon Jun Yaw",
-                "Yang Ze Xun",
-                "Jackson Tan",
-                "Wong Tian Ren",
-                "Lee Yong Sheng",
-                "James Tan Chee Min",
-                "Cham Ning",
-                "Lim Yu Zheng",
-                "Vanessa Chin Yin Qin",
-                "Ong Hang Meng",
-                "Thong Zi Yu",
-                "Ng Wei Yet",
-                "Tan Jie Ying ",
-                "Wong Zhang Yan",
-                "Ng Boon Xin",
-                "Ng Yen Hau",
-                "Eng Yean Khai",
-                "Chim Jen Sheng",
-                "Chia Ee Thern",
-                "Foo Yee Chuan",
-                "Lee Ming Hin",
-                "Lim Wen Jun",
-                "Chin Chi Loong",
-                "Tan Kim Yong",
-                "Foo Tun How Nicholas",
-                "Cher Jensen",
-                "Tan Pei Xing ",
-                "Jasmine Lim",
-                "Low Shi Ting",
-                "Seng Jing Fei",
-                "Lim Jun Chen",
-                "Chai Ru Yi",
-                "Soh Fang Qi",
-                "Loke Su Kay",
-                "Loh Kai Xin",
-                "Meredith Audrey Lam",
-                "Tan Jiue Lin",
-                "Tee Zoe",
-                "Kok Hui Ping",
-                "Wee Yu Xuan",
-                "Law Xue Cheng",
-                "Vivian Tay Hui Woon",
-                "Lee Wen Yi",
-                "Lim Hao Jie"
-            ];
-            $("#name1").autocomplete({
-                source: availableTags
-            });
-            $("#name2").autocomplete({
-                source: availableTags
-            });
-        });
-    </script>
+    <style type="text/css">
+        
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+    </style>
 </head>
 
 <body>
@@ -93,28 +37,6 @@
       </button>
         <a class="navbar-brand" href="#">FOA 17/18</a>
 
-        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-            <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="./index.php">Home <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="SportDay.php">Sports Day</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="IBG.php">IBG</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="CityHunter.php">City Hunter</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="Sentosa.php">Sentosa</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="CampusGo.php">Campus Gogogo</a>
-            </li>
-            </ul>
-        </div>
     </nav>
 
     <div class="container-fluid">
@@ -134,31 +56,62 @@
             <div class="tab-content">
                 <div class="tab-pane active" id="form" role="tabpanel">
                     <br>
+                    <div class="form-group">
+                        <label for="og">Hi There!</label><br>
+                        <table style="text-align: center;display: inline-block;">
+                            <tr>
+                                <td>Balance: <input type="number" value="3.00" class="field left" readonly></td>
+                            </tr>
+                            <tr>
+                                <td><button type="submit" class="btn btn-primary" name="Submit" style="width: 50%">Submit</button>
+                                    <button type="submit" class="btn btn-primary" name="Submit" style="width: 50%">Submit</button> 
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <br><br>
+
+                    <label for="og">Services</label><br>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <br>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <br>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <a href="https://www.w3schools.com">
+                        <img border="0" alt="W3Schools" src="img.jpg" width="100" height="100">
+                    </a>
+                    <br><br>
+                    <label for="og">Events</label><br>
                     <form action="" method="post">
                         <div class="form-group">
-                            <label for="og">OG</label>
-                            <select class="form-control" name="og">
-                                <option value="晓乐手 &amp 旭画匠">晓乐手 &amp 旭画匠</option>
-                                <option value="暮博客 &amp 夕影师">暮博客 &amp 夕影师</option>
-                                <option value="夜浪人 &amp 宵游士">夜浪人 &amp 宵游士</option>
-                            </select>
+                            <table style="width: 100%">
+                                <tr>
+                                    <td><p id="myP">Happy CNY!</p></td>
+                                    <td width="1%"><img border="0" alt="W3Schools" src="img.jpg" width="100" height="100" ></td>
+                                </tr>
+                            </table>
                         </div>
-                        <div class="form-group">
-                            <label for="name1">Player 1</label>
-                            <input type="text" name="name1" id="name1" class="form-control" placeholder="Input player 1's name">
-                        </div>
-                        <div class="form-group">
-                            <label for="name2">Player 2</label>
-                            <input type="text" name="name2" id="name2" class="form-control" placeholder="Input player 2's name">
-                        </div>
-                        <div class="form-group">
-                            <label for="time">Survival Time</label>
-                            <div class="form-inline">
-                                <input type="number" min="0" max="30" name="min" class="form-control col-6" placeholder="Minutes">
-                                <input type="number" min="0" max="59" name="sec" class="form-control col-6"  placeholder="Seconds">
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="Submit">Submit</button>
                     </form>
                     <br><br>
                 </div>
@@ -186,7 +139,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script>
         /*!
