@@ -7,6 +7,12 @@ verify_ssl = true
 
 [packages]
 flask = "*"
+flask-bootstrap = "*"
+flask-wtf = "*"
+flask-sqlalchemy = "*"
+flask-login = "*"
+requests = "*"
+pycrypto-on-pypi = "*"
 
 [requires]
 python_version = "2.7"
