@@ -74,6 +74,18 @@ class Event(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+class Fault(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    fault_location = db.Column(db.String(50))
+    fault_description = db.Column(db.String(140))
+    fault_type = db.Column(db.String(50))
+    fault_status = db.Column(db.String(50))
+    user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 # ================= Web Forms ==================== #
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
@@ -229,6 +241,30 @@ def retrieve_all_events():
     for event in events:
         result["events"].append(event.as_dict())
     return result
+
+
+# =================== Fault Reporting Endpoints ======================= #
+@app.route('/fault', methods=['GET', 'POST'])
+def fault_submit():
+    if request.method == 'POST':
+        data = request.form
+        new_id = len(Fault.query.all()) + 1
+        new_fault = Fault(id=new_id, fault_location=data['fault_location'], fault_description=data['fault_description'],
+                          fault_type=data['fault_type'], fault_status='Submitted to ODFM',
+                          user_id=session['user_id'])
+        db.session.add(new_fault)
+        db.session.commit()
+
+        return '''<h1>Your Fault reporting request has been created!</h1>
+        <p/>
+        <h2>For faster response, please call 67904777'''
+
+    return render_template('fault.html')
+
+
+@app.route('/fault_report')
+def fault_report():
+    return render_template('fault_report.html', items=Fault.query.all())
 
 
 if __name__ == '__main__':
