@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Live chat </title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('.static', filename='/img/icon.jpg')}}" />
+<link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="POST" action="/register_event">
+				<input type="text" placeholder="Event Name" name="event_name" />
+				<input type="textarea" placeholder="Event Description" name="event_description" />
+				<input type="text" placeholder="Date" name="event_date" />
+				<input type="text" placeholder="Time" name="event_time" />
+				<button>create</button>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript" src="{{url_for('.static', filename='index.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='signup.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='login.js')}}"></script></body>
+
+</html>
