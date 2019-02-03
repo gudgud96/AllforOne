@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
     <script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <script>
         ons.platform.select('android')
@@ -54,6 +55,35 @@
                     :pay-menu="() => currentPage = 'food'" @push-page="(page) => currentPage = page"></component>
             </v-ons-splitter-content>
         </v-ons-splitter>
+    </template>
+
+    <template id="temp">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
     </template>
 
     <template id="home">
@@ -144,10 +174,7 @@
                 </ons-row>
             </v-ons-card>
 
-            <v-ons-speed-dial position="bottom right" direction="up"
-                :visible="spdVisible"
-                :open.sync="spdOpen"
-            >
+            <v-ons-speed-dial position="bottom right" direction="up" :visible="spdVisible" :open.sync="spdOpen">
                 <v-ons-fab>
                     <v-ons-icon icon="md-plus"></v-ons-icon>
                 </v-ons-fab>
@@ -184,37 +211,35 @@
         <v-ons-page>
             <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <form class="login-form" method="POST" action="/order_food">
-                    <h2>Food Preorder @ NTU</h2>
-                    <br/>
-                    <p>Skip the queue, save the hassle!</p>
-                    <br/>
-                    <select placeholder="Stall Name" name="stall_name">
-                        <option value="North Spine Canteen">North Spine Canteen</option>
-                        <option value="South Spine Canteen">South Spine Canteen</option>
-                        <option value="The Quad">The Quad</option>
-                        <option value="McDonald's">McDonald's</option>
-                        <option value="Canteen 2">Canteen 2</option>
-                    </select>
-                    <select type="text" placeholder="Food Name" name="food_name">
-                        <option value="Chicken Rice">Chicken Rice</option>
-                        <option value="Salad">Salad</option>
-                        <option value="Mixed Rice">Mixed Rice</option>
-                        <option value="Pan Mee">Pan Mee</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                    </select>
-                    <select type="text" placeholder="Amount" name="amount" id="amount">
-                        <option v-for="n in 10" :value="n">[[ n ]]</option>
-                    </select>
-                    <p id="price">Price: - </p>
-                    <input style="display:none;" name="price" id="price-input">
-                    <br/>
-                    <button>create</button>
-                </form>
+                <h2>Food Preorder @ NTU</h2>
+                <br />
+                <p>Skip the queue, save the hassle!</p>
+                <br />
+                <select placeholder="Stall Name" name="stall_name">
+                    <option value="North Spine Canteen">North Spine Canteen</option>
+                    <option value="South Spine Canteen">South Spine Canteen</option>
+                    <option value="The Quad">The Quad</option>
+                    <option value="McDonald's">McDonald's</option>
+                    <option value="Canteen 2">Canteen 2</option>
+                </select>
+                <select type="text" placeholder="Food Name" name="food_name">
+                    <option value="Chicken Rice">Chicken Rice</option>
+                    <option value="Salad">Salad</option>
+                    <option value="Mixed Rice">Mixed Rice</option>
+                    <option value="Pan Mee">Pan Mee</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                </select>
+                <select type="text" placeholder="Amount" name="amount" id="amount">
+                    <option v-for="n in 10" :value="n">[[ n ]]</option>
+                </select>
+                <p id="price">Price: - </p>
+                <input style="display:none;" name="price" id="price-input">
+                <br />
+                <button @click="post">create</button>
             </v-ons-card>
             <v-ons-card>
                 <h2>Your food order history</h2>
-                <br/>
+                <br />
                 <table class="table table-hover">
                     <thead>
                         <tr>
@@ -237,21 +262,21 @@
                     </tr>
                     {% endfor %}
                 </table>
-        
+
                 <div class="col-md-6">
                     <h3>Your Top 5 Canteens</h3>
                     <div id="canvas-holder">
-                    <canvas id="chart-area"></canvas>
+                        <canvas id="chart-area"></canvas>
                     </div>
                 </div>
-        
+
                 <div class="col-md-6">
                     <h3>NTU Top 5 Canteens</h3>
                     <div id="canvas-holder-2">
-                    <canvas id="chart-area-2"></canvas>
+                        <canvas id="chart-area-2"></canvas>
                     </div>
                 </div>
-        
+
                 <input style="display:none;" id="ns" value="{{ ns }}">
                 <input style="display:none;" id="ss" value="{{ ss }}">
                 <input style="display:none;" id="quad" value="{{ quad }}">
@@ -260,32 +285,35 @@
             </v-ons-card>
         </v-ons-page>
     </template>
-
-    <template id="temp">
+    
+    <template id="foodfail">
         <v-ons-page>
-            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <custom-toolbar title="Failed Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <div class="title">
-                    Hack-and-roll
-                </div>
-                <ons-row class="content">
-                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
-                            style="width: 100%">
-                    </ons-col>
-                    <ons-col width="10%">
-
-                    </ons-col>
-                    <ons-col width="60%">
-                        <div>
-                            <v-ons-button>
-                                View details
-                            </v-ons-button>
-                            <v-ons-button>
-                                <v-ons-icon icon="ion-share"></v-ons-icon>
-                            </v-ons-button>
-                        </div>
-                    </ons-col>
-                </ons-row>
+                <form class="login-form" method="POST" action="/order_food">
+                    <h2>Your balance is insufficient!</h2>
+                    <br/>
+                    <p>Please top up immediately before you make your payment.</p>
+                    <br/>
+                    <h3	>Balance: {{ balance }}</h3>
+                    <br/>
+                </form>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+    
+    <template id="foodsuccess">
+        <v-ons-page>
+            <custom-toolbar title="Successful Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <form class="login-form" method="POST" action="/order_food">
+                    <h2>Your order is being sent!</h2>
+                    <br/>
+                    <p>You will receive an email when your food is ready for collection!</p>
+                    <br/>
+                    <h3	>Balance: {{ balance }}</h3>
+                    <br/>
+                </form>
             </v-ons-card>
         </v-ons-page>
     </template>
@@ -294,7 +322,7 @@
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <ons-row class="content">                    
+                <ons-row class="content">
                     <iframe src="https://baseride.com/maps/public/ntu/" style="width: 100vw;height: 85vh;border-width: 0px;"></iframe>
                 </ons-row>
             </v-ons-card>
@@ -305,7 +333,7 @@
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <ons-row class="content">                    
+                <ons-row class="content">
                     <iframe src="http://maps.ntu.edu.sg" style="width: 100vw;height: 85vh;border-width: 0px;"></iframe>
                 </ons-row>
             </v-ons-card>
@@ -320,7 +348,7 @@
                     <div class="form">
                         <form class="login-form" method="POST" action="/clinic_service">
                             <h2>Clinic Service</h2>
-                            <br/>
+                            <br />
                             <input type="text" placeholder="Clinic" name="clinic" />
                             <input type="text" placeholder="Booking Date" name="booking_date" />
                             <input type="text" placeholder="Booking Time" name="booking_time" />
@@ -484,9 +512,35 @@
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <ons-row class="content">                    
-                    <iframe src="http://maps.ntu.edu.sg" style="width: 100vw;height: 85vh;border-width: 0px;"></iframe>
+                <ons-row class="content">
                 </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="fault">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <div class="form">
+                    <form class="login-form" method="POST" action="/fault/submit">
+                        <h2>Fault Reporting</h2>
+                        <br />
+                        <input type="text" placeholder="Fault Location" name="fault_location" />
+                        <textarea rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
+                        <br>
+                        Type of Fault:
+                        <br>
+                        <select placeholder="Type of Fault" name="fault_type">
+                            <option value="electrical" selected>Electrical</option>
+                            <option value="plumbing">Plumbing</option>
+                            <option value="IT">IT</option>
+                            <option value="door_access">Door Access</option>
+                        </select>
+                        <br><br>
+                        <button>Submit</button>
+                    </form>
+                </div>
             </v-ons-card>
         </v-ons-page>
     </template>
