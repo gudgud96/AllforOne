@@ -24,6 +24,15 @@ const tempPage = {
   },
   components: { customToolbar }
 };
+const libraryPage = {
+  template: '#library',
+  props: ['toggleMenu','payMenu','title','titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
 
 app = new Vue({
   el: '#app',
@@ -39,8 +48,17 @@ app = new Vue({
         Library: 'Library Functions', 
         Booking: 'Booking Facilities', 
         Clinic: 'Clinic Services',
-        Fault: 'Fault Reporting',
-        Profile: 'Profile'
+        Fault: 'Fault Reporting'
+      },
+      imgsrc: {
+        Home: 'static/src/event.png', 
+        Food: 'static/src/food.png', 
+        Bus: 'static/src/bus.png', 
+        Rental: 'static/src/bike.png', 
+        Library: 'static/src/library.png', 
+        Booking: 'static/src/booking.png', 
+        Clinic: 'static/src/clinic.png',
+        Fault: 'static/src/faulty.png'
       },
       openSide: false
     };
@@ -50,11 +68,10 @@ app = new Vue({
     Food: foodPage,
     Bus: tempPage,
     Rental: tempPage,
-    Library: tempPage,
+    Library: libraryPage,
     Booking: tempPage,
     Clinic: tempPage,
-    Fault: tempPage,
-    Profile: tempPage
+    Fault: tempPage
   }
 });
 

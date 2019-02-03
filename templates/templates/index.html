@@ -27,10 +27,21 @@
         <v-ons-splitter>
             <v-ons-splitter-side swipeable width="100%" collapse="" side="left" :open.sync="openSide">
                 <v-ons-page>
-                    <input type="search" value="" placeholder="Search" class="search-input search-input--material"
-                        style="width:90%;margin-inline-start: 5%;margin-inline-end: 5%">
+                    <div style="padding: 10px 10px 0 10px">
+                        <div>
+                            <img src="https://via.placeholder.com/70" alt="Avatar" style="border-radius: 50%">
+                            <p>
+                                Chong Bing Sheng
+                            </p>
+                            <p>U1520033F</p>
+                        </div>
+                        <p style="text-align: right">Settings</p>
+                    </div>
                     <v-ons-list>
                         <v-ons-list-item v-for="pagefull,page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc[page]" alt="Cute kitten">
+                            </div>
                             <div class="center">{{ pagefull }}</div>
                         </v-ons-list-item>
                     </v-ons-list>
@@ -237,8 +248,67 @@
         </v-ons-page>
     </template>
 
+    <template id="library">
+        <v-ons-page>
+            <custom-toolbar :title="title" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                {{ titlefull[title] }}.
+            </p>
+            <table width="100%">
+                <tbody>
+                    <tr>
+                        <td width="33%" valign="top" style="border-right:1px dotted #828282;">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/request.aspx">
+                                    <img src="static/src/r1.jpg" border="0" alt="" style="width:100%">
+                                    <p>Request or renew materials</p>
+                                </a></div>
+                        </td>
+                        <td width="33%" valign="top" style="border-right:1px dotted #828282;">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/spaces.aspx">
+                                    <img src="static/src/r2.jpg" border="0" alt="" style="width:100%">
+                                    <p>Book spaces or equipment<br></p>
+                                </a></div>
+                        </td>
+                        <td width="33%" valign="top">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/expert.aspx">
+                                    <img src="static/src/r3.jpg" border="0" alt="" style="width:100%">
+                                    <p>Get expert advice</p>
+                                </a></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td valign="top" style="border-top:1px dotted #828282;border-right:1px dotted #828282;">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/teaching.aspx">
+                                    <img src="static/src/r4.jpg" border="0" alt="" style="width:100%">
+                                    <p>Teaching &amp; learning support</p>
+                                </a></div>
+                        </td>
+                        <td valign="top" style="border-top:1px dotted #828282;border-right:1px dotted #828282;">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/research.aspx">
+                                    <img src="static/src/r5.jpg" border="0" alt="" style="width:100%">
+                                    <p>Research &amp; publishing support</p>
+                                </a></div>
+                        </td>
+                        <td valign="top" style="border-top:1px dotted #828282;">
+                            <div class="section-thumbs ">
+                                <a href="/Library/Pages/about.aspx">
+                                    <img src="static/src/r6.jpg" border="0" alt="" style="width:100%">
+                                    <p>About NTU Library</p>
+                                </a></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </v-ons-page>
+    </template>
+
     <template id="toolbar">
-        <v-ons-toolbar>
+        <v-ons-toolbar class="toolbar toolbar--transparent">
             <div class="left">
                 <v-ons-toolbar-button @click="action">
                     <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
