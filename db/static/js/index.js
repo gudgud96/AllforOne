@@ -34,6 +34,11 @@ const foodPage = {
   template: '#food',
   props: ['toggleMenu', 'payMenu'],
   components: { customToolbar },
+  data(){
+    return {
+      price: 3.20
+    }
+  },
   methods: {
     createChart: function () {
       var randomScalingFactor = function () {
@@ -124,14 +129,16 @@ const foodPage = {
       window.myPie = new Chart(ctx2, config2);
     },
     post: function () {
-      axios.post('/order_food', {
+      var data = {
         stall_name: document.getElementById('stall_name').value,
         food_name: document.getElementById('food_name').value,
-        amount: document.getElementById('amount').value,
-        price: document.getElementById('price').value
-      })
+        amount: parseInt(document.getElementById('amount').value),
+        price: parseFloat(document.getElementById('price').value)
+      }
+      console.log(data)
+      axios.post('/order_food', data)
         .then(function (response) {
-          $ons.notification.alert('Success')
+          console.log('posted')
         })
         .catch(function (error) {
           $ons.notification.alert('Fail')

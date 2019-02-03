@@ -278,34 +278,32 @@
         <v-ons-page>
             <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <form method="POST" action="/order_food">
-                    <h2>Food Preorder @ NTU</h2>
-                    <br />
-                    <p>Skip the queue, save the hassle!</p>
-                    <br />
-                    <select class="select-input select-input--material" placeholder="Stall Name" name="stall_name">
-                        <option value="North Spine Canteen">North Spine Canteen</option>
-                        <option value="South Spine Canteen">South Spine Canteen</option>
-                        <option value="The Quad">The Quad</option>
-                        <option value="McDonald's">McDonald's</option>
-                        <option value="Canteen 2">Canteen 2</option>
-                    </select>
-                    <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name">
-                        <option value="Chicken Rice">Chicken Rice</option>
-                        <option value="Salad">Salad</option>
-                        <option value="Mixed Rice">Mixed Rice</option>
-                        <option value="Pan Mee">Pan Mee</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                    </select>
-                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
-                        id="amount">
-                        <option v-for="n in 10" :value="n">[[ n ]]</option>
-                    </select>
-                    <p id="price">Price: - </p>
-                    <input class="text-input text-input--material" style="display:none;" name="price" id="price-input">
-                    <br />
-                    <button class="button">Create</button>
-                </form>
+                <h2>Food Preorder @ NTU</h2>
+                <br />
+                <p>Skip the queue, save the hassle!</p>
+                <br />
+                <select class="select-input select-input--material" placeholder="Stall Name" id="stall_name" name="stall_name">
+                    <option value="North Spine Canteen">North Spine Canteen</option>
+                    <option value="South Spine Canteen">South Spine Canteen</option>
+                    <option value="The Quad">The Quad</option>
+                    <option value="McDonald's">McDonald's</option>
+                    <option value="Canteen 2">Canteen 2</option>
+                </select>
+                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name" id="food_name">
+                    <option value="Chicken Rice">Chicken Rice</option>
+                    <option value="Salad">Salad</option>
+                    <option value="Mixed Rice">Mixed Rice</option>
+                    <option value="Pan Mee">Pan Mee</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                </select>
+                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
+                    id="amount">
+                    <option v-for="n in 10" :value="n">[[ n ]]</option>
+                </select>
+                <p>Price: - SGD [[ price.toFixed(2) ]] </p>
+                <input class="text-input text-input--material" name="price" id="price" v-model="price">
+                <br />
+                <button class="button" @click="post">Create</button>
             </v-ons-card>
             <v-ons-card>
                 <h2>Your food order history</h2>
