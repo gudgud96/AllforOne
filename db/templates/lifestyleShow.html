@@ -39,6 +39,12 @@
         flex-wrap: wrap;
         justify-content: center;
     }
+
+    <!--&lt;!&ndash;for google map api&ndash;&gt;-->
+    <!--#map {-->
+        <!--height: 30%;-->
+    <!--}-->
+
     </style>
     
     <title>Smart Campus - Life Style</title>
@@ -82,6 +88,13 @@
 
             <v-ons-card>
                 <canvas id="location"></canvas>
+            </v-ons-card>
+
+            <v-ons-card>
+                <div class="title">
+                    Recent Location Heatmap
+                </div>
+                <iframe src="http://localhost:5000/heatmap" width="800" height="400"></iframe>
             </v-ons-card>
 
             <v-ons-card>
@@ -315,6 +328,13 @@
         </script>
 
     <script src="{{url_for('.static', filename='lifestyle.js')}}"></script>
+    <!--script for heatmap-->
+    <script src="{{url_for('.static', filename='heatmap.js')}}"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
+    </script>
+
+
 </body>
 
 </html>
