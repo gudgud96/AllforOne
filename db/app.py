@@ -266,8 +266,23 @@ def order_food():
 
 @app.route('/food_history', methods=['GET'])
 def food_history():
+    food_order_results = FoodOrder.query.filter_by(user_id=session["user_id"]).all()
+    result = {}
+    result['North Spine Canteen'] = 0
+    result['South Spine Canteen'] = 0
+    result['The Quad'] = 0
+    result["McDonald's"] = 0
+    result['Canteen 2'] = 0
+    for order in food_order_results:
+        result[order.stall_name] += 1
+    print(result)
     return render_template('food_history.html',
-                           items=FoodOrder.query.filter_by(user_id=session["user_id"]))
+                           items=FoodOrder.query.filter_by(user_id=session["user_id"]),
+                           ns=result['North Spine Canteen'],
+                           ss=result['South Spine Canteen'],
+                           quad=result['The Quad'],
+                           mcd=result["McDonald's"],
+                           can2=result['Canteen 2'])
 
 
 def add_new_order(stall_name, food_name, amount, price, user_id):
@@ -375,8 +390,6 @@ def clinic_booking():
 
 
 if __name__ == '__main__':
-    db.drop_all()
-    db.create_all()
     users = User.query.all()
     orders = FoodOrder.query.all()
     clinics = Clinic.query.all()

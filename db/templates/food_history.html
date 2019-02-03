@@ -7,6 +7,8 @@
 	<title>Food Order History @ NTU</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+    <script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
+    <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
     <!--<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>-->
 
 <body>
@@ -35,6 +37,118 @@
             </tr>
             {% endfor %}
         </table>
+
+        <div class="col-md-6">
+            <h3>Your Top 5 Canteens</h3>
+            <div id="canvas-holder">
+            <canvas id="chart-area"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <h3>NTU Top 5 Canteens</h3>
+            <div id="canvas-holder-2">
+            <canvas id="chart-area-2"></canvas>
+            </div>
+        </div>
+
+        <input style="display:none;" id="ns" value="{{ ns }}">
+        <input style="display:none;" id="ss" value="{{ ss }}">
+        <input style="display:none;" id="quad" value="{{ quad }}">
+        <input style="display:none;" id="mcd" value="{{ mcd }}">
+        <input style="display:none;" id="can2" value="{{ can2 }}">
+
+        <script>
+            var randomScalingFactor = function() {
+                return Math.round(Math.random() * 100);
+            };
+
+            var config = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [
+                            document.getElementById('ns').value,
+                            document.getElementById('ss').value,
+                            document.getElementById('quad').value,
+                            document.getElementById('mcd').value,
+                            document.getElementById('can2').value,
+
+                        ],
+                        backgroundColor: [
+                            window.chartColors.red,
+                            window.chartColors.orange,
+                            window.chartColors.yellow,
+                            window.chartColors.green,
+                            window.chartColors.blue,
+                        ],
+                        label: 'Dataset 1'
+                    }],
+                    labels: [
+                        'North Spine Canteen',
+                        'South Spine Canteen',
+                        'The Quad',
+                        "McDonald's",
+                        'Canteen 2'
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        datalabels: {
+                            formatter: (value, ctx) => {
+
+                              let sum = 0;
+                              let dataArr = ctx.chart.data.datasets[0].data;
+                              dataArr.map(data => {
+                                  sum += data;
+                              });
+                              let percentage = (value*100 / sum).toFixed(2)+"%";
+                              return percentage;
+                            },
+                            color: '#fff',
+                        }
+                    }
+                }
+            };
+
+            var config2 = {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        data: [
+                            30, 20, 20, 15, 15
+                        ],
+                        backgroundColor: [
+                            window.chartColors.red,
+                            window.chartColors.orange,
+                            window.chartColors.yellow,
+                            window.chartColors.green,
+                            window.chartColors.blue,
+                        ],
+                        label: 'Dataset 1'
+                    }],
+                    labels: [
+                        'North Spine Canteen',
+                        'South Spine Canteen',
+                        'The Quad',
+                        "McDonald's",
+                        'Canteen 2'
+                    ]
+                },
+                options: {
+                    responsive: true
+                }
+            };
+
+            window.onload = function() {
+                var ctx = document.getElementById('chart-area').getContext('2d');
+                window.myPie = new Chart(ctx, config);
+                var ctx2 = document.getElementById('chart-area-2').getContext('2d');
+                window.myPie = new Chart(ctx2, config2);
+            };
+
+        </script>
     </div>
 </body>
 
