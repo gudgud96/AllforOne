@@ -22,7 +22,6 @@
     <script>
         ons.platform.select('android')
     </script>
-    <link href="static/css/index.css" rel="stylesheet">
 
     <title>Smart Campus - Main</title>
     <style>
@@ -39,21 +38,69 @@
         <v-ons-splitter>
             <v-ons-splitter-side swipeable width="100%" collapse="" side="left" :open.sync="openSide">
                 <v-ons-page>
-                    <div style="padding: 10px 10px 0 10px">
+                    <div style="padding: 20px 20px 0 20px">
                         <div>
-                            <img src="https://via.placeholder.com/70" alt="Avatar" style="border-radius: 50%">
+                            <img src="http://i.pravatar.cc/70" alt="Avatar" style="border-radius: 50%" @click="currentPage = 'Profile';openSide = false">
                             <p>
-                                Chong Bing Sheng
+                                <strong>Chong Bing Sheng</strong>
                             </p>
-                            <p>U1520033F</p>
+                            <p><strong>U1520033F</strong></p>
                         </div>
                     </div>
                     <v-ons-list>
-                        <v-ons-list-item v-for="pagefull,page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Home'; openSide = false">
                             <div class="left">
-                                <img class="list-item__thumbnail" :src="imgsrc[page]" alt="Cute kitten">
+                                <img class="list-item__thumbnail" :src="imgsrc['Home']" alt="Icon">
                             </div>
-                            <div class="center">[[ pagefull ]]</div>
+                            <div class="center">Home</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Food'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Food']" alt="Icon">
+                            </div>
+                            <div class="center">Food Payment</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Bus'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Bus']" alt="Icon">
+                            </div>
+                            <div class="center">NTU Bus</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Map'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Map']" alt="Icon">
+                            </div>
+                            <div class="center">NTU Map</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Lifestyle'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Lifestyle']" alt="Icon">
+                            </div>
+                            <div class="center">Your Lifestyle</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Library'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Library']" alt="Icon">
+                            </div>
+                            <div class="center">Library Functions</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Booking'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Booking']" alt="Icon">
+                            </div>
+                            <div class="center">Booking Facilities</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Clinic'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Clinic']" alt="Icon">
+                            </div>
+                            <div class="center">Clinic Services</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Fault'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Fault']" alt="Icon">
+                            </div>
+                            <div class="center">Fault Reporting</div>
                         </v-ons-list-item>
                     </v-ons-list>
                 </v-ons-page>
@@ -103,7 +150,7 @@
             </p>
 
             <p style="text-align: center">
-                Your registered events
+                Your events today
             </p>
             <v-ons-card>
                 <div class="title">
@@ -118,7 +165,7 @@
                     </ons-col>
                     <ons-col width="60%">
                         <div>
-                            <v-ons-button>
+                            <v-ons-button @click="push('Event')">
                                 View details
                             </v-ons-button>
                             <v-ons-button>
@@ -145,7 +192,7 @@
                     </ons-col>
                     <ons-col width="60%">
                         <div>
-                            <v-ons-button>
+                            <v-ons-button @click="push('Event')">
                                 View details
                             </v-ons-button>
                             <v-ons-button>
@@ -156,36 +203,74 @@
                 </ons-row>
             </v-ons-card>
 
+            <p style="text-align: center">
+                Lifestyle Summary
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Recent Activities
+                </div>
+                <ons-row class="content">
+                    <br>
+                    <ons-col width="100%">Coding Competition</ons-col>
+                    <br><br>
+                    <ons-col width="100%">Marathon</ons-col>
+                </ons-row>
+                <br>
+                <v-ons-button @click="push('Lifestyle')">
+                    View more
+                </v-ons-button>
+            </v-ons-card>
+
             <v-ons-speed-dial position="bottom right" direction="up" :visible="spdVisible" :open.sync="spdOpen">
                 <v-ons-fab>
                     <v-ons-icon icon="md-plus"></v-ons-icon>
                 </v-ons-fab>
 
                 <v-ons-speed-dial-item @click="push('Bus')">
-                    <img src="static/src/bus.png" alt="Payment" style="width: 1.25em">
+                    <img src="static/src/bus.png" alt="Bus" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
-                <v-ons-speed-dial-item @click="push('Lifestyle')">
-                    <img src="static/src/bike.png" alt="Payment" style="width: 1.25em">
+                <v-ons-speed-dial-item @click="push('Map')">
+                    <img src="static/src/map.png" alt="Map" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
                 <v-ons-speed-dial-item @click="push('Library')">
-                    <img src="static/src/library.png" alt="Payment" style="width: 1.25em">
+                    <img src="static/src/library.png" alt="Library" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
                 <v-ons-speed-dial-item @click="push('Booking')">
-                    <img src="static/src/booking.png" alt="Payment" style="width: 1.25em">
+                    <img src="static/src/booking.png" alt="Booking" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
                 <v-ons-speed-dial-item @click="push('Clinic')">
-                    <img src="static/src/clinic.png" alt="Payment" style="width: 1.25em">
+                    <img src="static/src/clinic.png" alt="Clinic" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
                 <v-ons-speed-dial-item @click="push('Fault')">
-                    <img src="static/src/faulty.png" alt="Payment" style="width: 1.25em">
+                    <img src="static/src/faulty.png" alt="Fault" style="width: 1.25em">
                 </v-ons-speed-dial-item>
 
             </v-ons-speed-dial>
+        </v-ons-page>
+    </template>
+
+    <template id="event">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <div class="title">
+                    Hackathon
+                </div>
+                <img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI" style="width: 100%">
+                <p class="center">
+                    Date: 1/2/2019
+                    <br>
+                    Time: 10:00 am
+                    <br><br>
+                    Hack everything!
+                </p>
+            </v-ons-card>
         </v-ons-page>
     </template>
 
@@ -195,9 +280,9 @@
             <v-ons-card>
                 <form method="POST" action="/order_food">
                     <h2>Food Preorder @ NTU</h2>
-                    <br/>
+                    <br />
                     <p>Skip the queue, save the hassle!</p>
-                    <br/>
+                    <br />
                     <select class="select-input select-input--material" placeholder="Stall Name" name="stall_name">
                         <option value="North Spine Canteen">North Spine Canteen</option>
                         <option value="South Spine Canteen">South Spine Canteen</option>
@@ -212,12 +297,13 @@
                         <option value="Pan Mee">Pan Mee</option>
                         <option value="Vegetarian">Vegetarian</option>
                     </select>
-                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
+                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
+                        id="amount">
                         <option v-for="n in 10" :value="n">[[ n ]]</option>
                     </select>
                     <p id="price">Price: - </p>
                     <input class="text-input text-input--material" style="display:none;" name="price" id="price-input">
-                    <br/>
+                    <br />
                     <button class="button">Create</button>
                 </form>
             </v-ons-card>
@@ -269,34 +355,34 @@
             </v-ons-card>
         </v-ons-page>
     </template>
-    
+
     <template id="foodfail">
         <v-ons-page>
             <custom-toolbar title="Failed Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
                 <form class="login-form" method="POST" action="/order_food">
                     <h2>Your balance is insufficient!</h2>
-                    <br/>
+                    <br />
                     <p>Please top up immediately before you make your payment.</p>
-                    <br/>
-                    <h3	>Balance: {{ balance }}</h3>
-                    <br/>
+                    <br />
+                    <h3>Balance: {{ balance }}</h3>
+                    <br />
                 </form>
             </v-ons-card>
         </v-ons-page>
     </template>
-    
+
     <template id="foodsuccess">
         <v-ons-page>
             <custom-toolbar title="Successful Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
                 <form class="login-form" method="POST" action="/order_food">
                     <h2>Your order is being sent!</h2>
-                    <br/>
+                    <br />
                     <p>You will receive an email when your food is ready for collection!</p>
-                    <br/>
-                    <h3	>Balance: {{ balance }}</h3>
-                    <br/>
+                    <br />
+                    <h3>Balance: {{ balance }}</h3>
+                    <br />
                 </form>
             </v-ons-card>
         </v-ons-page>
@@ -333,13 +419,16 @@
                         <form class="login-form" method="POST" action="/clinic_service">
                             <h2>Clinic Service</h2>
                             <br />
-                            <input class="text-input text-input--material" placeholder="Clinic" name="clinic" type="text" required>
-                            
-                            <br /><input class="text-input text-input--material" placeholder="Booking Date" name="booking_date" type="text" required>
-                            
-                            <br /><input class="text-input text-input--material" placeholder="Booking Time" name="booking_time" type="text" required>
-                            
-                            
+                            <input class="text-input text-input--material" placeholder="Clinic" name="clinic" type="text"
+                                required>
+
+                            <br /><input class="text-input text-input--material" placeholder="Booking Date" name="booking_date"
+                                type="text" required>
+
+                            <br /><input class="text-input text-input--material" placeholder="Booking Time" name="booking_time"
+                                type="text" required>
+
+
                             <br /><textarea class="textarea" rows="3" placeholder="Description" name="description"></textarea>
                             <br>
                             <button type="submit" class="button">Create</button>
@@ -507,18 +596,18 @@
                 <v-ons-card>
                     <canvas id="expense"></canvas>
                 </v-ons-card>
-    
+
                 <v-ons-card>
                     <canvas id="location"></canvas>
                 </v-ons-card>
-    
+
                 <v-ons-card>
                     <div class="title">
                         Recent Location Heatmap
                     </div>
                     <iframe src="http://localhost:5000/heatmap" width="100%" height="400"></iframe>
                 </v-ons-card>
-    
+
                 <v-ons-card>
                     <div class="title">
                         Recent Expenses
@@ -536,16 +625,16 @@
                         </ons-col>
                     </ons-row>
                 </v-ons-card>
-    
+
                 <v-ons-card>
                     <div class="title">
                         Recent Activities
                     </div>
                     <ons-row class="content">
                         <br>
-                        <ons-col width="100%">COde</ons-col>
+                        <ons-col width="100%">Coding Competition</ons-col>
                         <br><br>
-                        <ons-col width="100%">COde</ons-col>              
+                        <ons-col width="100%">Marathon</ons-col>
                     </ons-row>
                 </v-ons-card>
             </v-ons-card>
@@ -600,28 +689,27 @@
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
                 <h2>Your Profile Page</h2>
-                <br/>
+                <br />
                 <img style="width:200px;height:200px;border:0;" src="{{url_for('static', filename='image.png')}}">
                 <p>This is your Matric Card's QR code.</p>
-                <br/>
+                <br />
                 <p>Scan here to take attendance, access school facilities, make payments, etc.</p>
-                <br/>
+                <br />
                 <h2>User Information</h2>
-                <br/>
+                <br />
                 <div style="text-align:left;">
                     <p><b>Matriculation Number</b> - {{ user_id }}</p>
                     <p><b>Name</b> - {{ name }}</p>
                     <p><b>Email</b> - {{ email }}</p>
                     <p><b>Credit Amount</b> - SGD {{ credit_amount }}</p>
-                    <br/>
+                    <br />
                 </div>
             </v-ons-card>
         </v-ons-page>
     </template>
     <div id="app"></div>
     <script src="static/js/index.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
     </script>
 </body>
 

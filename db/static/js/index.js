@@ -20,6 +20,16 @@ const homePage = {
   }
 };
 
+const eventPage = {
+  template: '#event',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
 const foodPage = {
   template: '#food',
   props: ['toggleMenu', 'payMenu'],
@@ -371,7 +381,8 @@ app = new Vue({
         Booking: 'Booking Facilities',
         Clinic: 'Clinic Services',
         Fault: 'Fault Reporting',
-        Profile: 'Profile'
+        Profile: 'Profile',
+        Event: 'Event Description'
       },
       imgsrc: {
         Home: 'static/src/event.png',
@@ -382,7 +393,7 @@ app = new Vue({
         Booking: 'static/src/booking.png',
         Clinic: 'static/src/clinic.png',
         Fault: 'static/src/faulty.png',
-        Map: 'static/src/bus.png',
+        Map: 'static/src/map.png',
         Profile: 'https://via.placeholder.com/70'
       },
       openSide: false
@@ -398,7 +409,8 @@ app = new Vue({
     Clinic: clinicPage,
     Fault: faultPage,
     Map: mapPage,
-    Profile: profilePage
+    Profile: profilePage,
+    Event: eventPage
   }
 });
 
