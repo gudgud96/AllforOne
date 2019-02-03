@@ -135,7 +135,7 @@ class RegisterForm(FlaskForm):
 @login_required
 def index():
     form = request.form
-    # return render_template('index.html')
+    return render_template('index.html')
 
 
 # ================= User Login DB Endpoints ==================== #
