@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Food Preorder @ NTU</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="GET" action="/topup">
+				<h2>Your balance is insufficient!</h2>
+				<br/>
+				<p>Please top up immediately before you make your payment.</p>
+				<br/>
+				<h3	>Balance: {{ balance }}</h3>
+				<br/>
+				<button>Top Up</button>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='signup.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='login.js')}}"></script>
+</body>
+
+</html>

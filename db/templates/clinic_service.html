@@ -4,22 +4,21 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Sign Up</title>
+	<title>Clinic Service </title>
 	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('.static', filename='/img/icon.jpg')}}" />
 <link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
 
 <body>
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form" method="POST" action="/signup">
-				<h2>Sign Up</h2>
+			<form class="login-form" method="POST" action="/clinic_service">
+				<h2>Clinic Service</h2>
 				<br/>
-				<input type="text" placeholder="Matriculation Number" name="matric" />
-				<input type="text" placeholder="Username" name="username" />
-				<input type="password" placeholder="Password" name="password" />
-				<input type="text" placeholder="Email" name="number" />
+				<input type="text" placeholder="Clinic" name="clinic" />
+				<input type="text" placeholder="Booking Date" name="booking_date" />
+				<input type="text" placeholder="Booking Time" name="booking_time" />
+				<input type="textarea" placeholder="Description" name="description" />
 				<button>create</button>
-				<p class="message">Already registered? <a href="{{ url_for('login') }}">Sign In</a></p>
 			</form>
 		</div>
 	</div>
