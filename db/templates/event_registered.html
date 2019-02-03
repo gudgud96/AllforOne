@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Event Registration @ NTU</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="GET" action="/register_event">
+				<h2>Your event is being sent for approval!</h2>
+				<br/>
+				<p>You will receive an email when your event request is approved!</p>
+				<br/>
+				<button>Back</button>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

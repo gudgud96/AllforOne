@@ -6,7 +6,18 @@ const customToolbar = {
 const homePage = {
   template: '#home',
   props: ['toggleMenu','payMenu'],
-  components: { customToolbar }
+  components: { customToolbar },
+  data() {
+    return {
+      spdVisible: true,
+      spdOpen: false
+    }
+  },
+  methods:{
+    push: function(page) {
+      this.$emit('push-page',page)
+    }
+  }
 };
 
 const foodPage = {
@@ -25,6 +36,38 @@ const tempPage = {
   components: { customToolbar }
 };
 
+const libraryPage = {
+  template: '#library',
+  props: ['toggleMenu','payMenu','title','titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
+const bookingPage = {
+  template: '#booking',
+  props: ['toggleMenu','payMenu','title','titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
+const clinicPage = {
+  template: '#clinic',
+  props: ['toggleMenu','payMenu','title','titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
+Vue.options.delimiters= ["[[", "]]"]
+
 app = new Vue({
   el: '#app',
   template: '#main',
@@ -39,8 +82,17 @@ app = new Vue({
         Library: 'Library Functions', 
         Booking: 'Booking Facilities', 
         Clinic: 'Clinic Services',
-        Fault: 'Fault Reporting',
-        Profile: 'Profile'
+        Fault: 'Fault Reporting'
+      },
+      imgsrc: {
+        Home: 'static/src/event.png', 
+        Food: 'static/src/food.png', 
+        Bus: 'static/src/bus.png', 
+        Rental: 'static/src/bike.png', 
+        Library: 'static/src/library.png', 
+        Booking: 'static/src/booking.png', 
+        Clinic: 'static/src/clinic.png',
+        Fault: 'static/src/faulty.png'
       },
       openSide: false
     };
@@ -50,11 +102,10 @@ app = new Vue({
     Food: foodPage,
     Bus: tempPage,
     Rental: tempPage,
-    Library: tempPage,
-    Booking: tempPage,
-    Clinic: tempPage,
-    Fault: tempPage,
-    Profile: tempPage
+    Library: libraryPage,
+    Booking: bookingPage,
+    Clinic: clinicPage,
+    Fault: tempPage
   }
 });
 
