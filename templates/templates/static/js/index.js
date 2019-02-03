@@ -25,7 +25,7 @@ const foodPage = {
   props: ['toggleMenu', 'payMenu'],
   components: { customToolbar },
   methods: {
-    createChart: function(){
+    createChart: function () {
       var randomScalingFactor = function () {
         return Math.round(Math.random() * 100);
       };
@@ -113,19 +113,19 @@ const foodPage = {
       var ctx2 = document.getElementById('chart-area-2').getContext('2d');
       window.myPie = new Chart(ctx2, config2);
     },
-    post: function(){
+    post: function () {
       axios.post('/order_food', {
         stall_name: document.getElementById('stall_name').value,
         food_name: document.getElementById('food_name').value,
         amount: document.getElementById('amount').value,
         price: document.getElementById('price').value
       })
-      .then(function (response) {
-        $ons.notification.alert('Success')
-      })
-      .catch(function (error) {
-        $ons.notification.alert('Fail')
-      });
+        .then(function (response) {
+          $ons.notification.alert('Success')
+        })
+        .catch(function (error) {
+          $ons.notification.alert('Fail')
+        });
     }
   },
   mounted: function () {
@@ -202,7 +202,135 @@ const lifestylePage = {
     return {
     }
   },
-  components: { customToolbar }
+  components: { customToolbar },
+  methods: {
+    createChart: function () {
+      window.chartColors = {
+        red: 'rgb(255, 99, 132)',
+        orange: 'rgb(255, 159, 64)',
+        yellow: 'rgb(255, 205, 86)',
+        green: 'rgb(75, 192, 192)',
+        blue: 'rgb(54, 162, 235)',
+        purple: 'rgb(153, 102, 255)',
+        grey: 'rgb(201, 203, 207)'
+      };
+      window.randomScalingFactor = function () {
+        return (Math.random() > 0.5 ? 1.0 : 0.0) * Math.random() * 100;
+      };
+      var config_loc = {
+        type: 'bar',
+        data: {
+          labels: ['NTU', 'Jurong East', 'Jurong West', 'Jurong North', 'Jurong South', 'Others'],
+          datasets: [{
+            label: 'Number of Visits',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: [
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor()
+            ],
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Most Visited Location'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Amount'
+              }
+            }]
+          }
+        }
+      };
+      var config = {
+        type: 'line',
+        data: {
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          datasets: [{
+            label: 'Expenses',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: [
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor(),
+              randomScalingFactor()
+            ],
+            fill: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          title: {
+            display: true,
+            text: 'Monthly Expenses'
+          },
+          tooltips: {
+            mode: 'index',
+            intersect: false,
+          },
+          hover: {
+            mode: 'nearest',
+            intersect: true
+          },
+          scales: {
+            xAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Month'
+              }
+            }],
+            yAxes: [{
+              display: true,
+              scaleLabel: {
+                display: true,
+                labelString: 'Amount'
+              }
+            }]
+          }
+        }
+      };
+      var ctx = $('#expense')[0].getContext('2d');
+      window.myLine = new Chart(ctx, config);
+      var ctx_loc = $('#location')[0].getContext('2d');
+      window.myLine = new Chart(ctx_loc, config_loc);
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.createChart()
+    })
+  }
 };
 
 const faultPage = {

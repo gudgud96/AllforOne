@@ -16,6 +16,8 @@
     <script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
     <script src="https://www.chartjs.org/samples/latest/utils.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <script>
         ons.platform.select('android')
@@ -128,33 +130,6 @@
             </v-ons-card>
 
             <p style="text-align: center">
-                Your lifestyle
-            </p>
-            <v-ons-card>
-                <div class="title">
-                    Hack-and-roll
-                </div>
-                <ons-row class="content">
-                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
-                            style="width: 100%">
-                    </ons-col>
-                    <ons-col width="10%">
-
-                    </ons-col>
-                    <ons-col width="60%">
-                        <div>
-                            <v-ons-button>
-                                View details
-                            </v-ons-button>
-                            <v-ons-button>
-                                <v-ons-icon icon="ion-share"></v-ons-icon>
-                            </v-ons-button>
-                        </div>
-                    </ons-col>
-                </ons-row>
-            </v-ons-card>
-
-            <p style="text-align: center">
                 What's going on in campus?
             </p>
             <v-ons-card>
@@ -218,31 +193,33 @@
         <v-ons-page>
             <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <h2>Food Preorder @ NTU</h2>
-                <br />
-                <p>Skip the queue, save the hassle!</p>
-                <br />
-                <select class="select-input select-input--material" placeholder="Stall Name" name="stall_name">
-                    <option value="North Spine Canteen">North Spine Canteen</option>
-                    <option value="South Spine Canteen">South Spine Canteen</option>
-                    <option value="The Quad">The Quad</option>
-                    <option value="McDonald's">McDonald's</option>
-                    <option value="Canteen 2">Canteen 2</option>
-                </select>
-                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name">
-                    <option value="Chicken Rice">Chicken Rice</option>
-                    <option value="Salad">Salad</option>
-                    <option value="Mixed Rice">Mixed Rice</option>
-                    <option value="Pan Mee">Pan Mee</option>
-                    <option value="Vegetarian">Vegetarian</option>
-                </select>
-                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
-                    <option v-for="n in 10" :value="n">[[ n ]]</option>
-                </select>
-                <p id="price">Price: - </p>
-                <input class="text-input text-input--material" style="display:none;" name="price" id="price-input">
-                <br />
-                <button class="button" @click="post">create</button>
+                <form method="POST" action="/order_food">
+                    <h2>Food Preorder @ NTU</h2>
+                    <br/>
+                    <p>Skip the queue, save the hassle!</p>
+                    <br/>
+                    <select class="select-input select-input--material" placeholder="Stall Name" name="stall_name">
+                        <option value="North Spine Canteen">North Spine Canteen</option>
+                        <option value="South Spine Canteen">South Spine Canteen</option>
+                        <option value="The Quad">The Quad</option>
+                        <option value="McDonald's">McDonald's</option>
+                        <option value="Canteen 2">Canteen 2</option>
+                    </select>
+                    <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name">
+                        <option value="Chicken Rice">Chicken Rice</option>
+                        <option value="Salad">Salad</option>
+                        <option value="Mixed Rice">Mixed Rice</option>
+                        <option value="Pan Mee">Pan Mee</option>
+                        <option value="Vegetarian">Vegetarian</option>
+                    </select>
+                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
+                        <option v-for="n in 10" :value="n">[[ n ]]</option>
+                    </select>
+                    <p id="price">Price: - </p>
+                    <input class="text-input text-input--material" style="display:none;" name="price" id="price-input">
+                    <br/>
+                    <button class="button">Create</button>
+                </form>
             </v-ons-card>
             <v-ons-card>
                 <h2>Your food order history</h2>
@@ -524,8 +501,53 @@
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
-                <ons-row class="content">
-                </ons-row>
+                <p style="text-align: center">
+                    Your lifestyle tracker
+                </p>
+                <v-ons-card>
+                    <canvas id="expense"></canvas>
+                </v-ons-card>
+    
+                <v-ons-card>
+                    <canvas id="location"></canvas>
+                </v-ons-card>
+    
+                <v-ons-card>
+                    <div class="title">
+                        Recent Location Heatmap
+                    </div>
+                    <iframe src="http://localhost:5000/heatmap" width="100%" height="400"></iframe>
+                </v-ons-card>
+    
+                <v-ons-card>
+                    <div class="title">
+                        Recent Expenses
+                    </div>
+                    <ons-row class="content">
+                        <br>
+                        <ons-col width="60%">Coffee
+                        </ons-col>
+                        <ons-col width="40%" style="text-align: right">$5.50
+                        </ons-col>
+                        <br><br>
+                        <ons-col width="60%">Coffee
+                        </ons-col>
+                        <ons-col width="40%" style="text-align: right">$4.60
+                        </ons-col>
+                    </ons-row>
+                </v-ons-card>
+    
+                <v-ons-card>
+                    <div class="title">
+                        Recent Activities
+                    </div>
+                    <ons-row class="content">
+                        <br>
+                        <ons-col width="100%">COde</ons-col>
+                        <br><br>
+                        <ons-col width="100%">COde</ons-col>              
+                    </ons-row>
+                </v-ons-card>
             </v-ons-card>
         </v-ons-page>
     </template>
@@ -538,19 +560,19 @@
                     <form class="login-form" method="POST" action="/fault/submit">
                         <h2>Fault Reporting</h2>
                         <br />
-                        <input type="text" placeholder="Fault Location" name="fault_location" />
-                        <textarea rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
+                        <input class="text-input text-input--material" type="text" placeholder="Fault Location" name="fault_location" />
+                        <textarea class="textarea" rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
                         <br>
                         Type of Fault:
                         <br>
-                        <select placeholder="Type of Fault" name="fault_type">
+                        <select class="select-input select-input--material" placeholder="Type of Fault" name="fault_type">
                             <option value="electrical" selected>Electrical</option>
                             <option value="plumbing">Plumbing</option>
                             <option value="IT">IT</option>
                             <option value="door_access">Door Access</option>
                         </select>
                         <br><br>
-                        <button>Submit</button>
+                        <button class="button">Submit</button>
                     </form>
                 </div>
             </v-ons-card>
@@ -575,6 +597,9 @@
 
     <div id="app"></div>
     <script src="static/js/index.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
+    </script>
 </body>
 
 </html>
