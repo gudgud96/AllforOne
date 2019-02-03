@@ -172,7 +172,7 @@ def login():
                 name = data['username']
                 return redirect(url_for('index'))
 
-            return '<h1>Invalid username or password</h1>'
+        return render_template('form_result.html', route = '/login', result = 'Failed!', msg = 'Invalid username or password!')
     return render_template('login.html')
 
 
@@ -193,7 +193,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
 
-        return '<h1>New user has been created!</h1>'
+        return render_template('form_result.html', route = '/signup', result = 'Successful!', msg = 'New user has been created!')
 
     return render_template('signup.html')
 
@@ -224,9 +224,10 @@ def topup():
         if is_topup:
             user = User.query.filter_by(id=session["user_id"]).first()
             balance = "{:.2f}".format(user.credit_amount)
-            return '<h1>Top up successful!</h1><h1>Balance: SGD ' + str(balance) + '</h1>'
+            
+            return render_template('form_result.html', route = '/topup', result = 'Top up successful!', msg = 'Balance: SGD ' + str(balance))
         else:
-            return '<h1>Top up unsuccessful!</h1>'
+            return render_template('form_result.html', route = '/topup', result = 'Top up failed!', msg = '')
     return render_template('topup.html')
 
 
@@ -253,7 +254,6 @@ def consume(user_id, amount):
 @app.route('/order_food', methods=['GET', 'POST'])
 def order_food():
     if request.method == 'POST':
-        data = request.get_json()
         total_price = Decimal(data["price"])
         is_added = add_new_order(data["stall_name"], data["food_name"], data["amount"],
                                  total_price, session["user_id"])
@@ -270,7 +270,7 @@ def order_food():
                 return json.dumps({"balance": balance})
                 # return render_template('order_unsuccessful.html', balance=balance)
 
-        return '<h1>Your order is not sent! Contact administrator.</h1>'
+        return render_template('form_result.html', route = '/order_food', result = 'Failed!', msg = 'Your order is not sent! Contact administrator')
 
     return render_template('food_order.html')
 
@@ -361,8 +361,7 @@ def update_activity():
         db.session.add(activity_update)
         db.session.commit()
 
-        return '<h1>Thanks and keep updating me your day!</h1>'
-
+        return render_template('form_result.html', route = '/lifestyletrack', result = 'Successful!', msg = 'Thanks and keep updating me your day!')
     return render_template('lifestyletrack.html')
 
 
@@ -388,9 +387,8 @@ def fault_submit():
         db.session.add(new_fault)
         db.session.commit()
 
-        return '''<h1>Your Fault reporting request has been created!</h1>
-        <p/>
-        <h2>For faster response, please call 67904777'''
+        return render_template('form_result.html', route='/fault/submit', result='Successful!',
+         msg = 'Your Fault reporting request has been created! For faster response, please call 67904777')
 
     return render_template('fault.html')
 
@@ -412,7 +410,7 @@ def clinic_booking():
         db.session.add(new_booking)
         db.session.commit()
 
-        return '<h1>Your request has been sent to {}!</h1>'.format(data['clinic'])
+        return render_template('form_result.html', route = '/clinic_service', result = 'Successful!', msg = 'Your request has been sent to ' + data['clinic'])
 
     return render_template('clinic_service.html')
 
