@@ -261,9 +261,11 @@ def order_food():
 
     return render_template('food_order.html')
 
+
 @app.route('/food_history', methods=['GET'])
 def food_history():
-    return render_template('food_history.html', items=FoodOrder.query.filter_by(user_id=session["user_id"]))
+    return render_template('food_history.html',
+                           items=FoodOrder.query.filter_by(user_id=session["user_id"]))
 
 
 def add_new_order(stall_name, food_name, amount, price, user_id):
@@ -288,7 +290,8 @@ def register_event():
     if request.method == 'POST':
         data = request.form
         new_id = len(Event.query.all()) + 1
-        new_event = Event(id=new_id, event_name=data['event_name'], event_description=data['event_description'],
+        new_event = Event(id=new_id, event_name=data['event_name'],
+                          event_description=data['event_description'],
                           event_date=data['event_date'], event_time=data['event_time'],
                           user_id=session['user_id'])
         db.session.add(new_event)
@@ -316,9 +319,10 @@ def update_activity():
         new_id = len(UserTracker.query.all())
         date_time_obj = datetime.datetime.strptime(data['timestamp'], '%Y-%m-%dT%H:%M')
         activity_update = UserTracker(id=new_id ,timestamp = date_time_obj,
-                        location = data['location'], activity = data['activity'], 
-                        description = data['description'], purchase = data['purchase'],
-                          user_id=session['user_id'])
+                                      location = data['location'], activity = data['activity'],
+                                      description = data['description'],
+                                      purchase = data['purchase'],
+                                      user_id=session['user_id'])
         db.session.add(activity_update)
         db.session.commit()
 
@@ -358,8 +362,8 @@ def clinic_booking():
         data = request.form
         new_id = len(Clinic.query.all())
         new_booking = Clinic(id=new_id, clinic=data['clinic'], booking_date=data['booking_date'],
-                              booking_time=data['booking_time'], description=data['description'],
-                              user_id=session['user_id'])
+                             booking_time=data['booking_time'], description=data['description'],
+                             user_id=session['user_id'])
         db.session.add(new_booking)
         db.session.commit()
 
@@ -369,6 +373,8 @@ def clinic_booking():
 
 
 if __name__ == '__main__':
+    db.drop_all()
+    db.create_all()
     users = User.query.all()
     orders = FoodOrder.query.all()
     clinics = Clinic.query.all()
