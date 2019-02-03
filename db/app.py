@@ -314,7 +314,7 @@ def register_event():
         db.session.add(new_event)
         db.session.commit()
 
-        return '<h1>New event has been created!</h1>'
+        return render_template('event_registered.html')
 
     return render_template('register_event.html')
 
