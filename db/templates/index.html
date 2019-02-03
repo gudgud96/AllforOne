@@ -222,27 +222,27 @@
                 <br />
                 <p>Skip the queue, save the hassle!</p>
                 <br />
-                <select placeholder="Stall Name" name="stall_name">
+                <select class="select-input select-input--material" placeholder="Stall Name" name="stall_name">
                     <option value="North Spine Canteen">North Spine Canteen</option>
                     <option value="South Spine Canteen">South Spine Canteen</option>
                     <option value="The Quad">The Quad</option>
                     <option value="McDonald's">McDonald's</option>
                     <option value="Canteen 2">Canteen 2</option>
                 </select>
-                <select type="text" placeholder="Food Name" name="food_name">
+                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name">
                     <option value="Chicken Rice">Chicken Rice</option>
                     <option value="Salad">Salad</option>
                     <option value="Mixed Rice">Mixed Rice</option>
                     <option value="Pan Mee">Pan Mee</option>
                     <option value="Vegetarian">Vegetarian</option>
                 </select>
-                <select type="text" placeholder="Amount" name="amount" id="amount">
+                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
                     <option v-for="n in 10" :value="n">[[ n ]]</option>
                 </select>
                 <p id="price">Price: - </p>
-                <input style="display:none;" name="price" id="price-input">
+                <input class="text-input text-input--material" style="display:none;" name="price" id="price-input">
                 <br />
-                <button @click="post">create</button>
+                <button class="button" @click="post">create</button>
             </v-ons-card>
             <v-ons-card>
                 <h2>Your food order history</h2>
@@ -356,11 +356,16 @@
                         <form class="login-form" method="POST" action="/clinic_service">
                             <h2>Clinic Service</h2>
                             <br />
-                            <input type="text" placeholder="Clinic" name="clinic" />
-                            <input type="text" placeholder="Booking Date" name="booking_date" />
-                            <input type="text" placeholder="Booking Time" name="booking_time" />
-                            <input type="textarea" placeholder="Description" name="description" />
-                            <button>create</button>
+                            <input class="text-input text-input--material" placeholder="Clinic" name="clinic" type="text" required>
+                            
+                            <br /><input class="text-input text-input--material" placeholder="Booking Date" name="booking_date" type="text" required>
+                            
+                            <br /><input class="text-input text-input--material" placeholder="Booking Time" name="booking_time" type="text" required>
+                            
+                            
+                            <br /><textarea class="textarea" rows="3" placeholder="Description" name="description"></textarea>
+                            <br>
+                            <button type="submit" class="button">Create</button>
                         </form>
                     </div>
                 </div>
