@@ -374,6 +374,12 @@ def clinic_booking():
     return render_template('clinic_service.html')
 
 
+@app.route('/clinic_report')
+def clinic_report():
+    # return render_template('clinic_report.html', items=Clinic.query.all())
+    return render_template('clinic_report.html')
+
+
 if __name__ == '__main__':
     db.drop_all()
     db.create_all()
