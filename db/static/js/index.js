@@ -114,9 +114,11 @@ const foodPage = {
       window.myPie = new Chart(ctx2, config2);
     },
     post: function(){
-      axios.post('/user', {
-        firstName: 'Fred',
-        lastName: 'Flintstone'
+      axios.post('/order_food', {
+        stall_name: document.getElementById('stall_name').value,
+        food_name: document.getElementById('food_name').value,
+        amount: document.getElementById('amount').value,
+        price: document.getElementById('price').value
       })
       .then(function (response) {
         $ons.notification.alert('Success')
