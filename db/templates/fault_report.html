@@ -27,9 +27,13 @@
                 <td>{{ item.fault_description }}</td>
                 <td>{{ item.fault_type }}</td>
                 <td>{{ item.fault_status }}</td>
+                <td><a href="http://maps.ntu.edu.sg/maps#q:{{ item.fault_location }}" class="btn btn-primary" target="_blank">View on NTU Map</a></td>
             </tr>
             {% endfor %}
         </table>
+
+        <h3>Average time for solving a request: 1 days</h3>
+        <p>For faster response, please call 67904777</p>
     </div>
 
 </body>
