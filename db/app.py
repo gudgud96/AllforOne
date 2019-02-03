@@ -7,6 +7,7 @@
 # =========================================== #
 
 import datetime
+import json
 import os
 from decimal import Decimal
 
@@ -172,8 +173,6 @@ def login():
                 return redirect(url_for('index'))
 
             return '<h1>Invalid username or password</h1>'
-            # return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
-
     return render_template('login.html')
 
 
@@ -263,11 +262,13 @@ def order_food():
             if is_consume:
                 user = User.query.filter_by(id=session["user_id"]).first()
                 balance = "{:.2f}".format(user.credit_amount)
-                return render_template('order_finish.html', balance=balance)
+                # return render_template('order_finish.html', balance=balance)
+                return json.dumps({"balance": balance})
             else:
                 user = User.query.filter_by(id=session["user_id"]).first()
                 balance = "{:.2f}".format(user.credit_amount)
-                return render_template('order_unsuccessful.html', balance=balance)
+                return json.dumps({"balance": balance})
+                # return render_template('order_unsuccessful.html', balance=balance)
 
         return '<h1>Your order is not sent! Contact administrator.</h1>'
 
