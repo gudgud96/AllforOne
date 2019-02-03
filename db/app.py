@@ -74,6 +74,9 @@ class Event(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 class UserTracker(db.Model):
+    '''User could choose either purchase (food , expenses) or activity (going to work...etc)
+    and description = his/her remarks, 
+    '''
     id = db.Column(db.Integer , primary_key=True)
     timestamp = db.Column(db.DateTime , index=True,default=datetime.datetime.now())
     purchase = db.Column(db.Boolean)
@@ -84,7 +87,11 @@ class UserTracker(db.Model):
     
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-    
+
+class MoneyTracker(UserTracker)
+    '''When user click purchase, how am I supposed to introduce them another function that
+    can show user their monthly performance
+    '''
 
 class Fault(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -253,6 +260,22 @@ def retrieve_all_events():
     for event in events:
         result["events"].append(event.as_dict())
     return result
+
+# =================== UserTracker DB Endpoints ======================= #
+@app.route('/lifestyletrack', methods=['GET', 'POST'])
+def update_activity():
+    if request.method == 'POST':
+        data = request.form
+        new_id = len(UserTracker.query.all())
+        activity_update = UserTracker(id=new_id, purchase = data['purchase'],
+                          activity = data['activity'], description = data['description'],
+                          user_id=session['user_id'], event_time = data['event_time'])
+        db.session.add(activity_update)
+        db.session.commit()
+
+        return '<h1>Thanks and keep updating me your day!</h1>'
+
+    return render_template('')
 
 
 # =================== Fault Reporting Endpoints ======================= #
