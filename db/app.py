@@ -330,7 +330,7 @@ def update_activity():
 
         return '<h1>Thanks and keep updating me your day!</h1>'
 
-    return render_template('lifestyle.html')
+    return render_template('lifestyleShow.html')
 
 
 # =================== Fault Reporting Endpoints ======================= #
