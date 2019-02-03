@@ -413,5 +413,3 @@ app = new Vue({
     Event: eventPage
   }
 });
-
-/**/
