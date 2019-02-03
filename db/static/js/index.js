@@ -138,7 +138,7 @@ const foodPage = {
       console.log(data)
       axios.post('/order_food', data)
         .then(function (response) {
-          console.log('posted')
+          $ons.notification.alert('Balance remaining: ' + response['balance'])
         })
         .catch(function (error) {
           $ons.notification.alert('Fail')
