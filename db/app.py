@@ -73,6 +73,7 @@ class Event(db.Model):
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
+
 class UserTracker(db.Model):
     '''User could choose either purchase (food , expenses) or activity (going to work...etc)
     and description = his/her remarks, 
@@ -270,13 +271,15 @@ def retrieve_all_events():
         result["events"].append(event.as_dict())
     return result
 
+
 # =================== UserTracker DB Endpoints ======================= #
 @app.route('/lifestyletrack', methods=['GET', 'POST'])
 def update_activity():
     if request.method == 'POST':
         data = request.form
         new_id = len(UserTracker.query.all())
-        activity_update = UserTracker(id=new_id ,timestamp = data['timestamp'],
+        date_time_obj = datetime.datetime.strptime(data['timestamp'], '%Y-%m-%dT%H:%M')
+        activity_update = UserTracker(id=new_id ,timestamp = date_time_obj,
                         location = data['location'], activity = data['activity'], 
                         description = data['description'], purchase = data['purchase'],
                           user_id=session['user_id'])
