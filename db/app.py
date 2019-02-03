@@ -363,6 +363,11 @@ def lifestyleshow():
     return render_template('lifestyleShow.html')
 
 
+@app.route('/heatmap')
+def heatmap_return():
+    return render_template('testmap.html')
+
+
 # =================== Fault Reporting Endpoints ======================= #
 @app.route('/fault/submit', methods=['GET', 'POST'])
 def fault_submit():
@@ -402,6 +407,12 @@ def clinic_booking():
         return '<h1>Your request has been sent to {}!</h1>'.format(data['clinic'])
 
     return render_template('clinic_service.html')
+
+
+@app.route('/clinic_report')
+def clinic_report():
+    # return render_template('clinic_report.html', items=Clinic.query.all())
+    return render_template('clinic_report.html')
 
 
 if __name__ == '__main__':
