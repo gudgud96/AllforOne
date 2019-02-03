@@ -319,16 +319,14 @@
                             <th>Collected?</th>
                         </tr>
                     </thead>
-                    {% for item in items %}
-                    <tr>
-                        <td>{{ item.timestamp }}</td>
-                        <td>{{ item.stall_name }}</td>
-                        <td>{{ item.food_name }}</td>
-                        <td>{{ item.amount }}</td>
-                        <td>{{ item.price }}</td>
+                    <tr v-for="item in items">
+                        <td>[[ item.timestamp ]]</td>
+                        <td>[[ item.stall_name ]]</td>
+                        <td>[[ item.food_name ]]</td>
+                        <td>[[ item.amount ]]</td>
+                        <td>[[ item.price ]]</td>
                         <td>Yes</td>
                     </tr>
-                    {% endfor %}
                 </table>
 
                 <div class="col-md-6">

@@ -36,7 +36,8 @@ const foodPage = {
   components: { customToolbar },
   data(){
     return {
-      price: 3.20
+      price: 3.20,
+      items: []
     }
   },
   methods: {
@@ -136,18 +137,38 @@ const foodPage = {
         price: parseFloat(document.getElementById('price').value)
       }
       console.log(data)
+      var me = this
       axios.post('/order_food', data)
         .then(function (response) {
-          $ons.notification.alert('Balance remaining: ' + response['balance'])
+          console.log(response)
+          alert('Balance remaining: ' + response.data['balance'])
+          me.items.push({
+            timestamp: 'Just now',
+            stall_name: data.stall_name,
+            food_name: data.food_name,
+            amount: data.amount,
+            price: data.price
+          })
         })
         .catch(function (error) {
-          $ons.notification.alert('Fail')
+          alert('Fail:' + error)
         });
-    }
+    },
+    get: function(){
+      axios
+        .get('/food_history')
+        .then(response => {
+          console.log(response.data)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+        }
   },
   mounted: function () {
     this.$nextTick(function () {
       this.createChart()
+      this.get()
     })
   }
 };
@@ -189,7 +210,26 @@ const profilePage = {
     return {
     }
   },
-  components: { customToolbar }
+  components: { customToolbar },
+  methods: {
+    post: function () {
+      var data = {
+        stall_name: document.getElementById('stall_name').value,
+        food_name: document.getElementById('food_name').value,
+        amount: parseInt(document.getElementById('amount').value),
+        price: parseFloat(document.getElementById('price').value)
+      }
+      console.log(data)
+      axios.post('/order_food', data)
+        .then(function (response) {
+          console.log(response)
+          alert('Balance remaining: ' + response.data['balance'])
+        })
+        .catch(function (error) {
+          alert('Fail:' + error)
+        });
+    }
+  }
 };
 
 const libraryPage = {

@@ -254,6 +254,7 @@ def consume(user_id, amount):
 @app.route('/order_food', methods=['GET', 'POST'])
 def order_food():
     if request.method == 'POST':
+        data = request.get_json()
         total_price = Decimal(data["price"])
         is_added = add_new_order(data["stall_name"], data["food_name"], data["amount"],
                                  total_price, session["user_id"])
