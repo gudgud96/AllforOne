@@ -23,6 +23,14 @@
     <link href="static/css/index.css" rel="stylesheet">
 
     <title>Smart Campus - Main</title>
+
+    <style>
+        a{
+            text-decoration: none;
+            color:#1E88E5;
+        }
+        a:visited {color:#1E88E5;}
+    </style>
 </head>
 
 <body>
@@ -285,34 +293,34 @@
             </v-ons-card>
         </v-ons-page>
     </template>
-    
+
     <template id="foodfail">
         <v-ons-page>
             <custom-toolbar title="Failed Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
                 <form class="login-form" method="POST" action="/order_food">
                     <h2>Your balance is insufficient!</h2>
-                    <br/>
+                    <br />
                     <p>Please top up immediately before you make your payment.</p>
-                    <br/>
-                    <h3	>Balance: {{ balance }}</h3>
-                    <br/>
+                    <br />
+                    <h3>Balance: {{ balance }}</h3>
+                    <br />
                 </form>
             </v-ons-card>
         </v-ons-page>
     </template>
-    
+
     <template id="foodsuccess">
         <v-ons-page>
             <custom-toolbar title="Successful Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <v-ons-card>
                 <form class="login-form" method="POST" action="/order_food">
                     <h2>Your order is being sent!</h2>
-                    <br/>
+                    <br />
                     <p>You will receive an email when your food is ready for collection!</p>
-                    <br/>
-                    <h3	>Balance: {{ balance }}</h3>
-                    <br/>
+                    <br />
+                    <h3>Balance: {{ balance }}</h3>
+                    <br />
                 </form>
             </v-ons-card>
         </v-ons-page>
