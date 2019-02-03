@@ -21,7 +21,6 @@
     <link href="{{url_for('.static', filename='lifestyle.css')}}" rel="stylesheet">
 
     <script src="{{url_for('.static', filename='Chart.min.js')}}"></script>
-    <!-- <script src="../static/Chart.min.js"></script> -->
     <style>
     canvas{
         -moz-user-select: none;
@@ -153,7 +152,7 @@
         <v-ons-page>
             <custom-toolbar :title="title" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
             <p style="text-align: center">
-                {{ titlefull[title] }}.
+                <!-- {{ titlefull[title] }} -->
             </p>
             <v-ons-card>
                 <div class="title">
