@@ -97,6 +97,8 @@ class Fault(db.Model):
     fault_type = db.Column(db.String(50))
     fault_status = db.Column(db.String(50))
     user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
+    fault_completed = db.Column(db.Text)
+    fault_taken_time = db.Column(db.Text)
 
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
@@ -332,14 +334,14 @@ def update_activity():
 
 
 # =================== Fault Reporting Endpoints ======================= #
-@app.route('/fault', methods=['GET', 'POST'])
+@app.route('/fault/submit', methods=['GET', 'POST'])
 def fault_submit():
     if request.method == 'POST':
         data = request.form
         new_id = len(Fault.query.all()) + 1
         new_fault = Fault(id=new_id, fault_location=data['fault_location'], fault_description=data['fault_description'],
                           fault_type=data['fault_type'], fault_status='Submitted to ODFM',
-                          user_id=session['user_id'])
+                          user_id=session['user_id'], fault_completed='No', fault_taken_time='0 hours')
         db.session.add(new_fault)
         db.session.commit()
 
@@ -350,7 +352,7 @@ def fault_submit():
     return render_template('fault.html')
 
 
-@app.route('/fault_report')
+@app.route('/fault/report')
 def fault_report():
     return render_template('fault_report.html', items=Fault.query.all())
 
