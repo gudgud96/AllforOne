@@ -34,10 +34,15 @@ const foodPage = {
   template: '#food',
   props: ['toggleMenu', 'payMenu'],
   components: { customToolbar },
-  data(){
+  data() {
     return {
       price: 3.20,
-      items: []
+      items: [],
+      ss: 10,
+      ns: 20,
+      quad: 10,
+      mcd: 4,
+      can2: 1
     }
   },
   methods: {
@@ -51,12 +56,11 @@ const foodPage = {
         data: {
           datasets: [{
             data: [
-              document.getElementById('ns').value,
-              document.getElementById('ss').value,
-              document.getElementById('quad').value,
-              document.getElementById('mcd').value,
-              document.getElementById('can2').value,
-
+              this.ns,
+              this.ss,
+              this.quad,
+              this.mcd,
+              this.can2,
             ],
             backgroundColor: [
               window.chartColors.red,
@@ -154,7 +158,7 @@ const foodPage = {
           alert('Fail:' + error)
         });
     },
-    get: function(){
+    get: function () {
       axios
         .get('/food_history')
         .then(response => {
@@ -163,7 +167,7 @@ const foodPage = {
         .catch(error => {
           console.log(error)
         })
-        }
+    }
   },
   mounted: function () {
     this.$nextTick(function () {
@@ -208,27 +212,34 @@ const profilePage = {
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
+      user_id: 0,
+      name: 0,
+      email: 0,
+      credit_amount: 0
     }
   },
   components: { customToolbar },
   methods: {
-    post: function () {
-      var data = {
-        stall_name: document.getElementById('stall_name').value,
-        food_name: document.getElementById('food_name').value,
-        amount: parseInt(document.getElementById('amount').value),
-        price: parseFloat(document.getElementById('price').value)
-      }
-      console.log(data)
-      axios.post('/order_food', data)
-        .then(function (response) {
-          console.log(response)
-          alert('Balance remaining: ' + response.data['balance'])
+    get: function () {
+      var me = this
+      axios
+        .get('/profile')
+        .then(response => {
+          console.log(response.data)
+          me.user_id = response.data['user_id']
+          me.name = response.data['name']
+          me.email = response.data['email']
+          me.credit_amount = response.data['credit_amount']
         })
-        .catch(function (error) {
-          alert('Fail:' + error)
-        });
+        .catch(error => {
+          console.log(error)
+        })
     }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.get()
+    })
   }
 };
 

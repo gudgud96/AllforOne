@@ -7,7 +7,13 @@
 	<title>Food Preorder @ NTU</title>
 	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
 <link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
+<style>
 
+a{
+            text-decoration: none;
+            color:#1E88E5;
+        }
+        a:visited {color:#1E88E5;}</style>
 <body>
 	<div class="login-page">
 		<div class="form">
@@ -16,7 +22,7 @@
 				<br/>
 				<p>{{msg}}</p>
 				<br/>
-				<button>Back</button>
+				<a style="" href='../'>Back</a>
 			</form>
 		</div>
 	</div>

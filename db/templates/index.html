@@ -342,44 +342,6 @@
                         <canvas id="chart-area-2"></canvas>
                     </div>
                 </div>
-
-                <input style="display:none;" id="ns" value="{{ ns }}">
-                <input style="display:none;" id="ss" value="{{ ss }}">
-                <input style="display:none;" id="quad" value="{{ quad }}">
-                <input style="display:none;" id="mcd" value="{{ mcd }}">
-                <input style="display:none;" id="can2" value="{{ can2 }}">
-            </v-ons-card>
-        </v-ons-page>
-    </template>
-
-    <template id="foodfail">
-        <v-ons-page>
-            <custom-toolbar title="Failed Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-card>
-                <form class="login-form" method="POST" action="/order_food">
-                    <h2>Your balance is insufficient!</h2>
-                    <br />
-                    <p>Please top up immediately before you make your payment.</p>
-                    <br />
-                    <h3>Balance: {{ balance }}</h3>
-                    <br />
-                </form>
-            </v-ons-card>
-        </v-ons-page>
-    </template>
-
-    <template id="foodsuccess">
-        <v-ons-page>
-            <custom-toolbar title="Successful Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-card>
-                <form class="login-form" method="POST" action="/order_food">
-                    <h2>Your order is being sent!</h2>
-                    <br />
-                    <p>You will receive an email when your food is ready for collection!</p>
-                    <br />
-                    <h3>Balance: {{ balance }}</h3>
-                    <br />
-                </form>
             </v-ons-card>
         </v-ons-page>
     </template>
@@ -694,10 +656,10 @@
                 <h2>User Information</h2>
                 <br />
                 <div style="text-align:left;">
-                    <p><b>Matriculation Number</b> - {{ user_id }}</p>
-                    <p><b>Name</b> - {{ name }}</p>
-                    <p><b>Email</b> - {{ email }}</p>
-                    <p><b>Credit Amount</b> - SGD {{ credit_amount }}</p>
+                    <p><b>Matriculation Number</b> - [[ user_id ]]</p>
+                    <p><b>Name</b> - [[ name ]]</p>
+                    <p><b>Email</b> - [[ email ]]</p>
+                    <p><b>Credit Amount</b> - SGD [[ credit_amount ]]</p>
                     <br />
                 </div>
             </v-ons-card>
