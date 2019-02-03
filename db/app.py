@@ -329,14 +329,13 @@ def clinic_booking():
     return render_template('clinic_service.html')
 
 
-
 if __name__ == '__main__':
     users = User.query.all()
     orders = FoodOrder.query.all()
-    db.drop_all()
-    db.create_al()
+    clinics = Clinic.query.all()
     # Just for developer viewing purpose for what is in the DB
     print([user.as_dict() for user in users])
     print([order.as_dict() for order in orders])
+    print([clinic.as_dict() for clinic in clinics])
     print(retrieve_all_events())
     app.run(debug=True)
