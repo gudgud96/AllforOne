@@ -79,8 +79,9 @@ class UserTracker(db.Model):
     '''
     id = db.Column(db.Integer , primary_key=True)
     timestamp = db.Column(db.DateTime , index=True,default=datetime.datetime.now())
-    purchase = db.Column(db.Boolean)
-    activity = db.Column(db.Boolean)
+    location = db.Column(db.String(15))
+    purchase = db.Column(db.Numeric(scale=2))
+    activity = db.Column(db.String(15))
     description = db.Column(db.String(140))
     user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
     
@@ -275,15 +276,16 @@ def update_activity():
     if request.method == 'POST':
         data = request.form
         new_id = len(UserTracker.query.all())
-        activity_update = UserTracker(id=new_id, purchase = data['purchase'],
-                          activity = data['activity'], description = data['description'],
-                          user_id=session['user_id'], timestamp = data['timestamp'])
+        activity_update = UserTracker(id=new_id ,timestamp = data['timestamp'],
+                        location = data['location'], activity = data['activity'], 
+                        description = data['description'], purchase = data['purchase'],
+                          user_id=session['user_id'])
         db.session.add(activity_update)
         db.session.commit()
 
         return '<h1>Thanks and keep updating me your day!</h1>'
 
-    return render_template('')
+    return render_template('lifestyletrack.html')
 
 
 # =================== Fault Reporting Endpoints ======================= #
@@ -331,6 +333,8 @@ def clinic_booking():
 if __name__ == '__main__':
     users = User.query.all()
     orders = FoodOrder.query.all()
+    db.drop_all()
+    db.create_al()
     # Just for developer viewing purpose for what is in the DB
     print([user.as_dict() for user in users])
     print([order.as_dict() for order in orders])

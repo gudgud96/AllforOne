@@ -12,14 +12,13 @@
 <body>
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form" method="POST" action="/register_event">
-				<input type="text" placeholder="Event Name" name="event_name" />
-				<input type="textarea" placeholder="Event Description" name="event_description" />
+			<form class="login-form" method="POST" action="/lifestyletrack">
+				<input type="datetime-local" id="datetime" name="timestamp" />
+				<input type="text" placeholder="Location" name="location" />
 				<input type="text" placeholder="Activity" name="activity" />
-				<input type="text" placeholder="Description" name="description" />
-				<input type="datetime-local" id="datetime" name="datetime" />
+				<input type="textarea" placeholder="Activity Description" name="description" />
 				<input type="checkbox" id="hasPurchase" style="width: min-content;"> Has Expenses?</input>
-				<input type="number" id="purchase" min="0.00" step="0.01" name="purchase" value = "0.00" style="display:none"/>
+				<input type="number" id="purchase" min="0.00" step="0.10" name="purchase" value = "0.00" style="display:none"/>
 				<button>create</button>
 			</form>
 		</div>
