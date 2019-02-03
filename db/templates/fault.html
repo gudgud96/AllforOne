@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>NTU Fault Reporting </title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('.static', filename='/img/icon.jpg')}}" />
+<link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="POST" action="/fault">
+				<input type="text" placeholder="Fault Location" name="fault_location" />
+				<textarea rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
+				<br><br>
+				Type of Fault:
+				<br>
+				<select placeholder="Type of Fault" name="fault_type">
+					<option value="electrical" selected	>Electrical</option>
+					<option value="plumbing">Plumbing</option>
+					<option value="IT">IT</option>
+					<option value="door_access">Door Access</option>
+				</select>
+				<br><br>
+				<button>Submit</button>
+			</form>
+		</div>
+	</div>
+<script type="text/javascript" src="{{url_for('.static', filename='index.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='signup.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='login.js')}}"></script></body>
+
+</html>

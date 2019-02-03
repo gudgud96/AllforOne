@@ -7,154 +7,254 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="">
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
 
-    <title>《列車旅行·首站》</title>
+    <script>
+        ons.platform.select('android')
+    </script>
+    <link href="static/css/index.css" rel="stylesheet">
 
-    <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <title>Smart Campus - Main</title>
 </head>
 
 <body>
+    <template id="main">
+        <v-ons-splitter>
+            <v-ons-splitter-side swipeable width="100%" collapse="" side="left" :open.sync="openSide">
+                <v-ons-page>
+                    <input type="search" value="" placeholder="Search" class="search-input search-input--material"
+                        style="width:90%;margin-inline-start: 5%;margin-inline-end: 5%">
+                    <v-ons-list>
+                        <v-ons-list-item v-for="pagefull,page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                            <div class="center">{{ pagefull }}</div>
+                        </v-ons-list-item>
+                    </v-ons-list>
+                </v-ons-page>
+            </v-ons-splitter-side>
 
-    <nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-        <a class="navbar-brand" href="#">FOA 17/18</a>
+            <v-ons-splitter-content>
+                <component :is="currentPage" :title="currentPage" :titlefull="pages" :toggle-menu="() => openSide = !openSide"
+                    :pay-menu="() => currentPage = 'food'"></component>
+            </v-ons-splitter-content>
+        </v-ons-splitter>
+    </template>
 
-    </nav>
+    <template id="home">
+        <v-ons-page>
+            <custom-toolbar title="Home" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Welcome home.
+            </p>
 
-    <div class="container-fluid">
+            <p style="text-align: center">
+                Your registered events
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
 
-
-        <div class="starter-template">
-            <h1>City Hunter</h1>
-            <br>
-            <ul class="nav nav-tabs" role="tablist">
-                <li class="nav-item">
-                    <a class="nav-link active" data-toggle="tab" href="#form" role="tab">Update Time</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" data-toggle="tab" href="#list" role="tab">List</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane active" id="form" role="tabpanel">
-                    <br>
-                    <div class="form-group">
-                        <label for="og">Hi There!</label><br>
-                        <table style="text-align: center;display: inline-block;">
-                            <tr>
-                                <td>Balance: <input type="number" value="3.00" class="field left" readonly></td>
-                            </tr>
-                            <tr>
-                                <td><button type="submit" class="btn btn-primary" name="Submit" style="width: 50%">Submit</button>
-                                    <button type="submit" class="btn btn-primary" name="Submit" style="width: 50%">Submit</button> 
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <br><br>
-
-                    <label for="og">Services</label><br>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <br>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <br>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <a href="https://www.w3schools.com">
-                        <img border="0" alt="W3Schools" src="static/img/img.jpg" width="100" height="100">
-                    </a>
-                    <br><br>
-                    <label for="og">Events</label><br>
-                    <form action="" method="post">
-                        <div class="form-group">
-                            <table style="width: 100%">
-                                <tr>
-                                    <td><p id="myP">Happy CNY!</p></td>
-                                    <td width="1%"><img border="0" alt="W3Schools" src="img.jpg" width="100" height="100" ></td>
-                                </tr>
-                            </table>
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
                         </div>
-                    </form>
-                    <br><br>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+
+            <p style="text-align: center">
+                Your lifestyle
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
                 </div>
-                <div class="tab-pane" id="list" role="tabpanel">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>OG</th>
-                                <th>Pair</th>
-                                <th>Time</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                    </table>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+
+            <p style="text-align: center">
+                What's going on in campus?
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
                 </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+
+            <p style="text-align: center">
+                Functions
+            </p>
+            <ons-row>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/food.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/library.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/faulty.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/bus.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/booking.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+                <ons-col width="30%">
+                    <div style="padding-left:20%">
+                        <v-ons-button>
+                            <img src="static/src/bike.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                        <v-ons-button>
+                            <img src="static/src/clinic.png" alt="Payment" style="width: 2em">
+                        </v-ons-button>
+                    </div>
+                </ons-col>
+            </ons-row>
+        </v-ons-page>
+    </template>
+
+    <template id="food">
+        <v-ons-page>
+            <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Food payment.
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="temp">
+        <v-ons-page>
+            <custom-toolbar :title="title" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                {{ titlefull[title] }}.
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="toolbar">
+        <v-ons-toolbar>
+            <div class="left">
+                <v-ons-toolbar-button @click="action">
+                    <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+                </v-ons-toolbar-button>
             </div>
-        </div>
+            <div class="center">{{ title }}</div>
+            <div class="right">
+                <v-ons-toolbar-button @click="pay">
+                    <v-ons-icon icon="wallet"></v-ons-icon>
+                </v-ons-toolbar-button>
+            </div>
+        </v-ons-toolbar>
+    </template>
 
-    </div>
-    <!-- /.container -->
-
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script>
-        /*!
-         * IE10 viewport hack for Surface/desktop Windows 8 bug
-         * Copyright 2014-2017 The Bootstrap Authors
-         * Copyright 2014-2017 Twitter, Inc.
-         * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-         */
-
-        // See the Getting Started docs for more information:
-        // https://getbootstrap.com/getting-started/#support-ie10-width
-
-        (function() {
-            'use strict'
-
-            if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
-                var msViewportStyle = document.createElement('style')
-                msViewportStyle.appendChild(
-                    document.createTextNode(
-                        '@-ms-viewport{width:auto!important}'
-                    )
-                )
-                document.head.appendChild(msViewportStyle)
-            }
-
-        }())
-        $('.navbar').focusout(function(){
-            $('.navbar-collapse').collapse('hide');
-        });
-    </script>
+    <div id="app"></div>
+    <script src="static/js/index.js"></script>
 </body>
 
 </html>
