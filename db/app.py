@@ -253,9 +253,6 @@ def consume(user_id, amount):
 @app.route('/order_food', methods=['GET', 'POST'])
 def order_food():
     if request.method == 'POST':
-        print('start')
-        print(request.get_json())
-        print('end')
         data = request.get_json()
         total_price = Decimal(data["price"])
         is_added = add_new_order(data["stall_name"], data["food_name"], data["amount"],
@@ -289,14 +286,21 @@ def food_history():
     result['Canteen 2'] = 0
     for order in food_order_results:
         result[order.stall_name] += 1
-    print(result)
-    return render_template('food_history.html',
-                           items=FoodOrder.query.filter_by(user_id=session["user_id"]),
-                           ns=result['North Spine Canteen'],
-                           ss=result['South Spine Canteen'],
-                           quad=result['The Quad'],
-                           mcd=result["McDonald's"],
-                           can2=result['Canteen 2'])
+    # return render_template('food_history.html',
+    #                        items=FoodOrder.query.filter_by(user_id=session["user_id"]),
+    #                        ns=result['North Spine Canteen'],
+    #                        ss=result['South Spine Canteen'],
+    #                        quad=result['The Quad'],
+    #                        mcd=result["McDonald's"],
+    #                        can2=result['Canteen 2'])
+    output_dict = dict()
+    output_dict["user_id"] = session["user_id"]
+    output_dict["ns"] = result['North Spine Canteen']
+    output_dict["ss"] = result['South Spine Canteen']
+    output_dict["quad"] = result['The Quad']
+    output_dict["mcd"] = result["McDonald's"]
+    output_dict["can2"] = result['Canteen 2']
+    return json.dumps(output_dict)
 
 
 def add_new_order(stall_name, food_name, amount, price, user_id):
