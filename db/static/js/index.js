@@ -165,6 +165,16 @@ const mapPage = {
   components: { customToolbar }
 };
 
+const profilePage = {
+  template: '#profile',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
 const libraryPage = {
   template: '#library',
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
@@ -360,7 +370,8 @@ app = new Vue({
         Library: 'Library Functions',
         Booking: 'Booking Facilities',
         Clinic: 'Clinic Services',
-        Fault: 'Fault Reporting'
+        Fault: 'Fault Reporting',
+        Profile: 'Profile'
       },
       imgsrc: {
         Home: 'static/src/event.png',
@@ -371,7 +382,8 @@ app = new Vue({
         Booking: 'static/src/booking.png',
         Clinic: 'static/src/clinic.png',
         Fault: 'static/src/faulty.png',
-        Map: 'static/src/bus.png'
+        Map: 'static/src/bus.png',
+        Profile: 'https://via.placeholder.com/70'
       },
       openSide: false
     };
@@ -385,7 +397,8 @@ app = new Vue({
     Booking: bookingPage,
     Clinic: clinicPage,
     Fault: faultPage,
-    Map: mapPage
+    Map: mapPage,
+    Profile: profilePage
   }
 });
 

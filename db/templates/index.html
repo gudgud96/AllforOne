@@ -595,6 +595,29 @@
         </v-ons-toolbar>
     </template>
 
+    <template id="profile">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <h2>Your Profile Page</h2>
+                <br/>
+                <img style="width:200px;height:200px;border:0;" src="{{url_for('static', filename='image.png')}}">
+                <p>This is your Matric Card's QR code.</p>
+                <br/>
+                <p>Scan here to take attendance, access school facilities, make payments, etc.</p>
+                <br/>
+                <h2>User Information</h2>
+                <br/>
+                <div style="text-align:left;">
+                    <p><b>Matriculation Number</b> - {{ user_id }}</p>
+                    <p><b>Name</b> - {{ name }}</p>
+                    <p><b>Email</b> - {{ email }}</p>
+                    <p><b>Credit Amount</b> - SGD {{ credit_amount }}</p>
+                    <br/>
+                </div>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
     <div id="app"></div>
     <script src="static/js/index.js"></script>
     <script async defer
