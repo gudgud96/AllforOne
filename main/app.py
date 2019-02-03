@@ -1,90 +1,41 @@
-# ====== DB endpoints for AllInOne app ====== #
-# Here provides DB endpoints for 3 tables -   #
-# User, FoodOrder and Event schema to be used #
-# by backend functions.                       #
-#                                             #
-# Author: Tan Hao Hao                         #
-# =========================================== #
-
-import datetime
+# ================= Main App Logic ================ #
+# Main app logic to call other feature logics       #
+# as blueprints.                                    #
+#                                                   #
+# Author: Hao Hao                                   #
+# ================================================= #
 import os
 from decimal import Decimal
-
 from flask import Flask, render_template, redirect, url_for, request, Response, session
-from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask_wtf import FlaskForm 
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length
-from flask_sqlalchemy  import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
+
+# initialize main app
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Thisissupposedtobesecret!'
+
 
 # database location
 db_path = os.path.join(os.path.dirname(__file__), 'database.db')
 db_uri = 'sqlite:///{}'.format(db_path)
 app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 
-bootstrap = Bootstrap(app)
-db = SQLAlchemy(app)
+
+# initialize db from model.py
+from main.model import db, User, Event, FoodOrder
+app.app_context().push()
+db.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 migrate = Migrate(app, db)
 
 
-# ================= Models ==================== #
-class User(UserMixin, db.Model):
-    id = db.Column(db.String(9), primary_key=True)      # matric number
-    username = db.Column(db.String(15), unique=True)
-    email = db.Column(db.String(50), unique=True)
-    password = db.Column(db.String(80))
-    credit_amount = db.Column(db.Numeric(precision=2), default=0.00)
-
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class FoodOrder(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    stall_name = db.Column(db.String(50))
-    food_name = db.Column(db.String(50))
-    amount = db.Column(db.Integer)
-    price = db.Column(db.Numeric(scale=2))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.datetime.now())
-    is_collected = db.Column(db.Boolean)
-    user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
-
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-class Event(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    event_name = db.Column(db.String(50))
-    event_description = db.Column(db.String(140))
-    event_date = db.Column(db.String(15))
-    event_time = db.Column(db.String(15))
-    user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
-
-    def as_dict(self):
-        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
-
-
-# ================= Web Forms ==================== #
-class LoginForm(FlaskForm):
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
-    remember = BooleanField('remember')
-
-
-class RegisterForm(FlaskForm):
-    email = StringField('email', validators=[InputRequired(), Email(message='Invalid email'), Length(max=50)])
-    username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)])
+# initialize db from model.py
+from main.food.food_preorder import food_api
+app.register_blueprint(food_api, url_prefix='/food')
 
 
 # Dummy index page for testing only. To be inserted with new ones
@@ -180,29 +131,6 @@ def consume(user_id, amount):
     user.credit_amount -= Decimal(amount)
     db.session.commit()
     return True
-
-
-# ================= Food Order DB Endpoints ==================== #
-@app.route('/orderfood', methods=['GET', 'POST'])
-def order_food():
-    if request.method == 'POST':
-        data = request.form
-        new_id = len(FoodOrder.query.all())
-        new_order = FoodOrder(id=new_id, stall_name=data['stall_name'], food_name=data['food_name'],
-                              amount=data['amount'], price=data['price'], is_collected=False,
-                              user_id=session['user_id'])
-        db.session.add(new_order)
-        db.session.commit()
-
-        return '<h1>New order has been created!</h1>'
-
-    return render_template('food_order.html')
-
-
-def update_food_collected(order_id, collect_status):
-    collected_order = FoodOrder.query.filter_by(id=order_id).first()
-    collected_order.is_collected = collect_status
-    db.session.commit()
 
 
 # =================== Event DB Endpoints ======================= #
