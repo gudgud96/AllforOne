@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Live chat </title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+	<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="POST" action="/food/order_food">
+				<h2>Food Preorder @ NTU</h2>
+				<br/>
+				<input type="text" placeholder="Stall Name" name="stall_name" />
+				<input type="text" placeholder="Food Name" name="food_name" />
+				<input type="text" placeholder="Amount" name="amount" />
+				<input type="text" placeholder="Price" name="price" />
+				<button>create</button>
+			</form>
+		</div>
+	</div>
+	<script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='signup.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static', filename='login.js')}}"></script>
+</body>
+
+</body>
+
+</html>
