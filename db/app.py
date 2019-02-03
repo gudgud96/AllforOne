@@ -321,10 +321,10 @@ def clinic_booking():
     if request.method == 'POST':
         data = request.form
         new_id = len(Clinic.query.all())
-        new_order = Clinic(id=new_id, clinic=data['clinic'], booking_date=data['booking_date'],
+        new_booking = Clinic(id=new_id, clinic=data['clinic'], booking_date=data['booking_date'],
                               booking_time=data['booking_time'], description=data['description'],
                               user_id=session['user_id'])
-        db.session.add(new_order)
+        db.session.add(new_booking)
         db.session.commit()
 
         return '<h1>Your request has been sent to {}!</h1>'.format(data['clinic'])
