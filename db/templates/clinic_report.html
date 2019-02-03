@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Clinic Service Reporting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--HighChart-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Clinic Booking Report</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Timestamp</th>
+                    <th>Clinic</th>
+                    <th>Booking Date</th>
+                    <th>Booking Time</th>
+                    <th>Description</th>
+                    <th>Total waiting time</th>
+                </tr>
+            </thead>
+            <tr>
+                <td>2017-07-04*13:23:55</td>
+                <td>Fullerton Healthcare</td>
+                <td>1/2/2019</td>
+                <td>9:00am</td>
+                <td>Severe Headache</td>
+                <td>3 hours</td>
+            </tr>
+            <tr>
+                <td>2017-07-04*13:23:55</td>
+                <td>Fullerton Healthcare</td>
+                <td>3/2/2019</td>
+                <td>11am</td>
+                <td>Fever until 39 degree</td>
+                <td>1 hour</td>
+            </tr>
+        </table>
+
+        <h3>Average waiting time for Fullerton Healthcare: 3 Hours</h3>
+        <h3>Current time: 12:00am, Estimated time for appointment: 2:00pm</h3>
+        <div id="container" style="width:100%; height:400px;">
+
+        </div>
+    </div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    var myChart = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Average Waiting Time of Fullerton Healthcare for the Pass 6 Months (hours)'
+        },
+        xAxis: {
+            categories: ['Aug 18', 'Sep 18', 'Oct 18', 'Nov 18', 'Dec 18', 'Jan 19']
+        },
+        yAxis: {
+            title: {
+                text: 'Hours Taken (h)'
+            }
+        },
+        series: [{
+            name: 'Fullerton Healthcare',
+            data: [4,3,2,2,3,3]
+        }]
+    });
+});
+</script>
+
+</body>
+</html>

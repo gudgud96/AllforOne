@@ -4,7 +4,7 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Live chat </title>
+	<title>Sign Up</title>
 	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('.static', filename='/img/icon.jpg')}}" />
 <link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
 
@@ -12,12 +12,14 @@
 	<div class="login-page">
 		<div class="form">
 			<form class="login-form" method="POST" action="/signup">
-				<input type="text" placeholder="Matriculation Number" name="matric" />
-				<input type="text" placeholder="Username" name="username" />
-				<input type="password" placeholder="Password" name="password" />
-				<input type="text" placeholder="number" name="number" />
+				<h2>Sign Up</h2>
+				<br/>
+				<input type="text" placeholder="Matriculation Number" name="matric" required>
+				<input type="text" placeholder="Username" name="username" required>
+				<input type="password" placeholder="Password" name="password" required>
+				<input type="text" placeholder="Email" name="number" required>
 				<button>create</button>
-				<p class="message">Already registered? <a href="login.html">Sign In</a></p>
+				<p class="message">Already registered? <a href="{{ url_for('login') }}">Sign In</a></p>
 			</form>
 		</div>
 	</div>

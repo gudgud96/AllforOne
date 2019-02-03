@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Top Up @ NTU</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+	<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
+
+<body>
+	<div class="login-page">
+		<div class="form">
+			<form class="login-form" method="POST" action="/topup">
+				<h2>Credit Top Up @ NTU</h2>
+				<br/>
+				<p>Select your topup amount.</p>
+				<br/>
+				<select type="text" placeholder="Amount" name="amount" id="amount">
+					<option value="10">10</option>
+					<option value="20">20</option>
+					<option value="30">30</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+				</select>
+				<br/>
+				<button>Top Up</button>
+			</form>
+		</div>
+	</div>
+</body>
+
+</body>
+
+</html>

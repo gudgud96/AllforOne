@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="">
+    <!-- development version, includes helpful console warnings -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+    <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+    <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
+
+    <script>
+        ons.platform.select('android')
+    </script>
+    <link href="static/css/index.css" rel="stylesheet">
+
+    <script src="static/js/Chart.min.js"></script>
+    <style>
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    .chart-container {
+        width: 500px;
+        margin-left: 40px;
+        margin-right: 40px;
+        margin-bottom: 40px;
+    }
+    .container {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    </style>
+    
+    <title>Smart Campus - Life Style</title>
+</head>
+
+<body>
+    <template id="main">
+        <v-ons-splitter>
+            <v-ons-splitter-side swipeable width="100%" collapse="" side="left" :open.sync="openSide">
+                <v-ons-page>
+                    <input type="search" value="" placeholder="Search" class="search-input search-input--material"
+                        style="width:90%;margin-inline-start: 5%;margin-inline-end: 5%">
+                    <v-ons-list>
+                        <v-ons-list-item v-for="pagefull,page in pages" tappable modifier="chevron" @click="currentPage = page; openSide = false">
+                            <div class="center">{{ pagefull }}</div>
+                        </v-ons-list-item>
+                    </v-ons-list>
+                </v-ons-page>
+            </v-ons-splitter-side>
+
+            <v-ons-splitter-content>
+                <component :is="currentPage" :title="currentPage" :titlefull="pages" :toggle-menu="() => openSide = !openSide"
+                    :pay-menu="() => currentPage = 'food'"></component>
+            </v-ons-splitter-content>
+        </v-ons-splitter>
+    </template>
+
+    <template id="home">
+        <v-ons-page>
+            <custom-toolbar title="Home" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Welcome home.
+            </p>
+
+            <p style="text-align: center">
+                Your registered events
+            </p>
+            <v-ons-card>
+                <canvas id="expense"></canvas>
+            </v-ons-card>
+
+            <v-ons-card>
+                <canvas id="location"></canvas>
+            </v-ons-card>
+
+            <v-ons-card>
+                <div class="title">
+                    Recent Expenses
+                </div>
+                <ons-row class="content">
+                    <br>
+                    <ons-col width="60%">Coffee
+                    </ons-col>
+                    <ons-col width="40%" style="text-align: right">$1000
+                    </ons-col>
+                    <br><br>
+                    <ons-col width="60%">Coffee
+                    </ons-col>
+                    <ons-col width="40%" style="text-align: right">$1000
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+
+            <v-ons-card>
+                <div class="title">
+                    Recent Activities
+                </div>
+                <ons-row class="content">
+                    <br>
+                    <ons-col width="100%">COde</ons-col>
+                    <br><br>
+                    <ons-col width="100%">COde</ons-col>              
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="food">
+        <v-ons-page>
+            <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                Food payment.
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+                    <ons-col width="30%"><img src="https://monaca.io/img/logos/download_image_onsenui_01.png" alt="Onsen UI"
+                            style="width: 100%">
+                    </ons-col>
+                    <ons-col width="10%">
+
+                    </ons-col>
+                    <ons-col width="60%">
+                        <div>
+                            <v-ons-button>
+                                View details
+                            </v-ons-button>
+                            <v-ons-button>
+                                <v-ons-icon icon="ion-share"></v-ons-icon>
+                            </v-ons-button>
+                        </div>
+                    </ons-col>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="temp">
+        <v-ons-page>
+            <custom-toolbar :title="title" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <p style="text-align: center">
+                {{ titlefull[title] }}.
+            </p>
+            <v-ons-card>
+                <div class="title">
+                    Hack-and-roll
+                </div>
+                <ons-row class="content">
+
+
+        <canvas id="canvas"></canvas>
+                </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="toolbar">
+        <v-ons-toolbar>
+            <div class="left">
+                <v-ons-toolbar-button @click="action">
+                    <v-ons-icon icon="ion-navicon, material:md-menu"></v-ons-icon>
+                </v-ons-toolbar-button>
+            </div>
+            <div class="center">{{ title }}</div>
+            <div class="right">
+                <v-ons-toolbar-button @click="pay">
+                    <v-ons-icon icon="wallet"></v-ons-icon>
+                </v-ons-toolbar-button>
+            </div>
+        </v-ons-toolbar>
+    </template>
+
+    <div id="app"></div>
+
+        <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+            window.chartColors = {
+                red: 'rgb(255, 99, 132)',
+                orange: 'rgb(255, 159, 64)',
+                yellow: 'rgb(255, 205, 86)',
+                green: 'rgb(75, 192, 192)',
+                blue: 'rgb(54, 162, 235)',
+                purple: 'rgb(153, 102, 255)',
+                grey: 'rgb(201, 203, 207)'
+            }; 
+            window.randomScalingFactor = function() {
+                return (Math.random() > 0.5 ? 1.0 : -1.0) * Math.random() * 100;
+            };
+        </script>
+        <script>
+            var config_loc = {
+                type: 'bar',
+                data: {
+                    labels: ['NTU', 'Jurong East', 'Jurong West', 'Jurong North', 'Jurong South', 'Others'],
+                    datasets: [{
+                        label: 'Number of Visits',
+                        backgroundColor: window.chartColors.red,
+                        borderColor: window.chartColors.red,
+                        data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                        ],
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Most Visited Location'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Month'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Amount'
+                            }
+                        }]
+                    }
+                }
+            };
+
+            var config = {
+                type: 'line',
+                data: {
+                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                    datasets: [{
+                        label: 'Expenses',
+                        backgroundColor: window.chartColors.red,
+                        borderColor: window.chartColors.red,
+                        data: [
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor(),
+                        randomScalingFactor()
+                        ],
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    title: {
+                        display: true,
+                        text: 'Monthly Expenses'
+                    },
+                    tooltips: {
+                        mode: 'index',
+                        intersect: false,
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Month'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Amount'
+                            }
+                        }]
+                    }
+                }
+            };
+            
+            $(document).ready( function() {
+                var ctx = $('#expense')[0].getContext('2d');
+                window.myLine = new Chart(ctx, config);
+                var ctx_loc = $('#location')[0].getContext('2d');
+                window.myLine = new Chart(ctx_loc, config_loc);
+            });
+        </script>
+
+    <script src="static/js/index.js"></script>
+</body>
+
+</html>
