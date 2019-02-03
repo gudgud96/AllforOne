@@ -5,7 +5,7 @@ const customToolbar = {
 
 const homePage = {
   template: '#home',
-  props: ['toggleMenu','payMenu'],
+  props: ['toggleMenu', 'payMenu'],
   components: { customToolbar },
   data() {
     return {
@@ -13,22 +13,137 @@ const homePage = {
       spdOpen: false
     }
   },
-  methods:{
-    push: function(page) {
-      this.$emit('push-page',page)
+  methods: {
+    push: function (page) {
+      this.$emit('push-page', page)
     }
   }
 };
 
 const foodPage = {
   template: '#food',
-  props: ['toggleMenu','payMenu'],
-  components: { customToolbar }
+  props: ['toggleMenu', 'payMenu'],
+  components: { customToolbar },
+  methods: {
+    createChart: function(){
+      var randomScalingFactor = function () {
+        return Math.round(Math.random() * 100);
+      };
+
+      var config = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [
+              document.getElementById('ns').value,
+              document.getElementById('ss').value,
+              document.getElementById('quad').value,
+              document.getElementById('mcd').value,
+              document.getElementById('can2').value,
+
+            ],
+            backgroundColor: [
+              window.chartColors.red,
+              window.chartColors.orange,
+              window.chartColors.yellow,
+              window.chartColors.green,
+              window.chartColors.blue,
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: [
+            'North Spine Canteen',
+            'South Spine Canteen',
+            'The Quad',
+            "McDonald's",
+            'Canteen 2'
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            datalabels: {
+              formatter: (value, ctx) => {
+
+                let sum = 0;
+                let dataArr = ctx.chart.data.datasets[0].data;
+                dataArr.map(data => {
+                  sum += data;
+                });
+                let percentage = (value * 100 / sum).toFixed(2) + "%";
+                return percentage;
+              },
+              color: '#fff',
+            }
+          }
+        }
+      };
+
+      var config2 = {
+        type: 'pie',
+        data: {
+          datasets: [{
+            data: [
+              30, 20, 20, 15, 15
+            ],
+            backgroundColor: [
+              window.chartColors.red,
+              window.chartColors.orange,
+              window.chartColors.yellow,
+              window.chartColors.green,
+              window.chartColors.blue,
+            ],
+            label: 'Dataset 1'
+          }],
+          labels: [
+            'North Spine Canteen',
+            'South Spine Canteen',
+            'The Quad',
+            "McDonald's",
+            'Canteen 2'
+          ]
+        },
+        options: {
+          responsive: true
+        }
+      };
+
+      var ctx = document.getElementById('chart-area').getContext('2d');
+      window.myPie = new Chart(ctx, config);
+      var ctx2 = document.getElementById('chart-area-2').getContext('2d');
+      window.myPie = new Chart(ctx2, config2);
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.createChart()
+    })
+  }
 };
 
 const tempPage = {
   template: '#temp',
-  props: ['toggleMenu','payMenu','title','titlefull'],
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
+const busPage = {
+  template: '#bus',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+
+const mapPage = {
+  template: '#map',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
     }
@@ -38,7 +153,7 @@ const tempPage = {
 
 const libraryPage = {
   template: '#library',
-  props: ['toggleMenu','payMenu','title','titlefull'],
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
     }
@@ -48,7 +163,7 @@ const libraryPage = {
 
 const bookingPage = {
   template: '#booking',
-  props: ['toggleMenu','payMenu','title','titlefull'],
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
     }
@@ -58,7 +173,7 @@ const bookingPage = {
 
 const clinicPage = {
   template: '#clinic',
-  props: ['toggleMenu','payMenu','title','titlefull'],
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
     }
@@ -66,7 +181,16 @@ const clinicPage = {
   components: { customToolbar }
 };
 
-Vue.options.delimiters= ["[[", "]]"]
+const lifestylePage = {
+  template: '#lifestyle',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar }
+};
+Vue.options.delimiters = ["[[", "]]"]
 
 app = new Vue({
   el: '#app',
@@ -75,24 +199,26 @@ app = new Vue({
     return {
       currentPage: 'Home',
       pages: {
-        Home: 'Home', 
-        Food: 'Food Payment', 
-        Bus: 'NTU Bus', 
-        Rental: 'Scooter/Bike Rental', 
-        Library: 'Library Functions', 
-        Booking: 'Booking Facilities', 
+        Home: 'Home',
+        Food: 'Food Payment',
+        Bus: 'NTU Bus',
+        Map: 'NTU Map',
+        Lifestyle: 'Your Lifestyle',
+        Library: 'Library Functions',
+        Booking: 'Booking Facilities',
         Clinic: 'Clinic Services',
         Fault: 'Fault Reporting'
       },
       imgsrc: {
-        Home: 'static/src/event.png', 
-        Food: 'static/src/food.png', 
-        Bus: 'static/src/bus.png', 
-        Rental: 'static/src/bike.png', 
-        Library: 'static/src/library.png', 
-        Booking: 'static/src/booking.png', 
+        Home: 'static/src/event.png',
+        Food: 'static/src/food.png',
+        Bus: 'static/src/bus.png',
+        Lifestyle: 'static/src/bike.png',
+        Library: 'static/src/library.png',
+        Booking: 'static/src/booking.png',
         Clinic: 'static/src/clinic.png',
-        Fault: 'static/src/faulty.png'
+        Fault: 'static/src/faulty.png',
+        Map: 'static/src/bus.png'
       },
       openSide: false
     };
@@ -100,12 +226,13 @@ app = new Vue({
   components: {
     Home: homePage,
     Food: foodPage,
-    Bus: tempPage,
-    Rental: tempPage,
+    Bus: busPage,
+    Lifestyle: lifestylePage,
     Library: libraryPage,
     Booking: bookingPage,
     Clinic: clinicPage,
-    Fault: tempPage
+    Fault: tempPage,
+    Map: mapPage
   }
 });
 
