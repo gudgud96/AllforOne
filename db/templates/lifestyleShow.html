@@ -13,39 +13,17 @@
     <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
     <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
-
     <script>
         ons.platform.select('android')
     </script>
 
-    <link href="{{url_for('.static', filename='lifestyle.css')}}" rel="stylesheet">
+<!-- <link href="text/javascript" src="../static/lifestyle.css"></script>
+<script type="text/javascript" src="../static/Chart.min.js"></script> -->
 
-    <script src="{{url_for('.static', filename='Chart.min.js')}}"></script>
-    <style>
-    canvas{
-        -moz-user-select: none;
-        -webkit-user-select: none;
-        -ms-user-select: none;
-    }
-    .chart-container {
-        width: 500px;
-        margin-left: 40px;
-        margin-right: 40px;
-        margin-bottom: 40px;
-    }
-    .container {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
 
-    <!--&lt;!&ndash;for google map api&ndash;&gt;-->
-    <!--#map {-->
-        <!--height: 30%;-->
-    <!--}-->
+    <link href="{{url_for('static', filename='lifestyle.css')}}" rel="stylesheet">
 
-    </style>
+    <script src="{{url_for('static', filename='Chart.min.js')}}"></script>
     
     <title>Smart Campus - Life Style</title>
 </head>
@@ -94,7 +72,7 @@
                 <div class="title">
                     Recent Location Heatmap
                 </div>
-                <iframe src="http://localhost:5000/heatmap" width="800" height="400"></iframe>
+                <iframe src="http://localhost:5000/heatmap" width="100%" height="400"></iframe>
             </v-ons-card>
 
             <v-ons-card>
@@ -199,6 +177,9 @@
 
         <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!-- <script type="text/javascript" src="../static/lifestyle.js"></script>
+<script type="text/javascript" src="../static/heatmap.js"></script>
+ -->
         <script>
             window.chartColors = {
                 red: 'rgb(255, 99, 132)',
@@ -212,8 +193,6 @@
             window.randomScalingFactor = function() {
                 return (Math.random() > 0.5 ? 1.0 : 0.0) * Math.random() * 100;
             };
-        </script>
-        <script>
             var config_loc = {
                 type: 'bar',
                 data: {
@@ -265,7 +244,6 @@
                     }
                 }
             };
-
             var config = {
                 type: 'line',
                 data: {
@@ -318,7 +296,6 @@
                     }
                 }
             };
-
             $(document).ready( function() {
                 var ctx = $('#expense')[0].getContext('2d');
                 window.myLine = new Chart(ctx, config);
@@ -326,10 +303,10 @@
                 window.myLine = new Chart(ctx_loc, config_loc);
             });
         </script>
-
-    <script src="{{url_for('.static', filename='lifestyle.js')}}"></script>
+    <script src="{{url_for('static', filename='lifestyle.js')}}"></script>
     <!--script for heatmap-->
-    <script src="{{url_for('.static', filename='heatmap.js')}}"></script>
+    <script src="{{url_for('static', filename='heatmap.js')}}"></script>
+
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
     </script>

@@ -58,4 +58,8 @@ app = new Vue({
   }
 });
 
-/**/
+
+// <!--&lt;!&ndash;for google map api&ndash;&gt;-->
+// <!--#map {-->
+//     <!--height: 30%;-->
+// <!--}-->
