@@ -209,10 +209,16 @@ def logout():
 @login_required
 def profile():
     result = User.query.get(session["user_id"]).as_dict()
-    return render_template('profile.html', user_id=result['id'],
-                           name=result['username'],
-                           credit_amount="{:.2f}".format(result['credit_amount']),
-                           email=result['email'])
+    output_dict = dict()
+    output_dict['user_id'] = result['id']
+    output_dict['name'] = result['username']
+    output_dict['credit_amount'] = "{:.2f}".format(result['credit_amount'])
+    output_dict['email'] = result['email']
+    # return render_template('profile.html', user_id=result['id'],
+    #                        name=result['username'],
+    #                        credit_amount="{:.2f}".format(result['credit_amount']),
+    #                        email=result['email'])
+    return json.dumps(output_dict)
 
 
 # ================= Wallet DB Endpoints ==================== #
