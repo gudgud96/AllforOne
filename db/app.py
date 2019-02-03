@@ -83,15 +83,10 @@ class UserTracker(db.Model):
     activity = db.Column(db.Boolean)
     description = db.Column(db.String(140))
     user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
-    event_time = db.Column(db.DateTime)
     
     def as_dict(self):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
-class MoneyTracker(UserTracker)
-    '''When user click purchase, how am I supposed to introduce them another function that
-    can show user their monthly performance
-    '''
 
 class Fault(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -274,7 +269,7 @@ def retrieve_all_events():
         result["events"].append(event.as_dict())
     return result
 
-# =================== ExpensesTracker DB Endpoints ======================= #
+# =================== UserTracker DB Endpoints ======================= #
 @app.route('/lifestyletrack', methods=['GET', 'POST'])
 def update_activity():
     if request.method == 'POST':
@@ -282,7 +277,7 @@ def update_activity():
         new_id = len(UserTracker.query.all())
         activity_update = UserTracker(id=new_id, purchase = data['purchase'],
                           activity = data['activity'], description = data['description'],
-                          user_id=session['user_id'], event_time = data['event_time'])
+                          user_id=session['user_id'], timestamp = data['timestamp'])
         db.session.add(activity_update)
         db.session.commit()
 
