@@ -206,6 +206,16 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/profile', methods=['GET'])
+@login_required
+def profile():
+    result = User.query.get(session["user_id"]).as_dict()
+    return render_template('profile.html', user_id=result['id'],
+                           name=result['username'],
+                           credit_amount="{:.2f}".format(result['credit_amount']),
+                           email=result['email'])
+
+
 # ================= Wallet DB Endpoints ==================== #
 @app.route('/topup', methods=['GET', 'POST'])
 def topup():
