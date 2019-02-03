@@ -13,10 +13,10 @@ from decimal import Decimal
 from flask import Flask, render_template, redirect, url_for, request, Response, session
 from flask_bootstrap import Bootstrap
 from flask_migrate import Migrate
-from flask_wtf import FlaskForm 
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField
 from wtforms.validators import InputRequired, Email, Length
-from flask_sqlalchemy  import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 
@@ -38,7 +38,7 @@ migrate = Migrate(app, db)
 
 # ================= Models ==================== #
 class User(UserMixin, db.Model):
-    id = db.Column(db.String(9), primary_key=True)      # matric number
+    id = db.Column(db.String(9), primary_key=True)  # matric number
     username = db.Column(db.String(15), unique=True)
     email = db.Column(db.String(50), unique=True)
     password = db.Column(db.String(80))
@@ -140,12 +140,12 @@ def index():
 @app.route('/get_users', methods=['POST'])
 def get_users():
     users = User.query.filter_by("test")
-    
+
     filter_users = {}
     for user in users:
         filter_users['username'] = user['username']
         filter_users['status'] = user['status']
-        
+
     return filter_users
 
 
@@ -170,7 +170,7 @@ def login():
                 return redirect(url_for('index'))
 
             return '<h1>Invalid username or password</h1>'
-            #return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
+            # return '<h1>' + form.username.data + ' ' + form.password.data + '</h1>'
 
     return render_template('login.html')
 
@@ -204,7 +204,22 @@ def logout():
     return redirect(url_for('index'))
 
 
-def topup(user_id, amount):
+# ================= Wallet DB Endpoints ==================== #
+@app.route('/topup', methods=['GET', 'POST'])
+def topup():
+    if request.method == 'POST':
+        data = request.form
+        is_topup = topup_user(session["user_id"], int(data["amount"]))
+        if is_topup:
+            user = User.query.filter_by(id=session["user_id"]).first()
+            balance = "{:.2f}".format(user.credit_amount)
+            return '<h1>Top up successful!</h1><h1>Balance: SGD ' + str(balance) + '</h1>'
+        else:
+            return '<h1>Top up unsuccessful!</h1>'
+    return render_template('topup.html')
+
+
+def topup_user(user_id, amount):
     user = User.query.filter_by(id=user_id).first()
     print(user.credit_amount)
     user.credit_amount += Decimal(amount)
@@ -224,20 +239,41 @@ def consume(user_id, amount):
 
 
 # ================= Food Order DB Endpoints ==================== #
-@app.route('/orderfood', methods=['GET', 'POST'])
+@app.route('/order_food', methods=['GET', 'POST'])
 def order_food():
     if request.method == 'POST':
         data = request.form
-        new_id = len(FoodOrder.query.all())
-        new_order = FoodOrder(id=new_id, stall_name=data['stall_name'], food_name=data['food_name'],
-                              amount=data['amount'], price=data['price'], is_collected=False,
-                              user_id=session['user_id'])
-        db.session.add(new_order)
-        db.session.commit()
+        total_price = Decimal(data["price"])
+        is_added = add_new_order(data["stall_name"], data["food_name"], data["amount"],
+                                 total_price, session["user_id"])
+        if is_added:
+            is_consume = consume(session["user_id"], total_price)
+            if is_consume:
+                user = User.query.filter_by(id=session["user_id"]).first()
+                balance = "{:.2f}".format(user.credit_amount)
+                return render_template('order_finish.html', balance=balance)
+            else:
+                user = User.query.filter_by(id=session["user_id"]).first()
+                balance = "{:.2f}".format(user.credit_amount)
+                return render_template('order_unsuccessful.html', balance=balance)
 
-        return '<h1>New order has been created!</h1>'
+        return '<h1>Your order is not sent! Contact administrator.</h1>'
 
     return render_template('food_order.html')
+
+@app.route('/food_history', methods=['GET'])
+def food_history():
+    return render_template('food_history.html', items=FoodOrder.query.filter_by(user_id=session["user_id"]))
+
+
+def add_new_order(stall_name, food_name, amount, price, user_id):
+    new_id = len(FoodOrder.query.all())
+    new_order = FoodOrder(id=new_id, stall_name=stall_name, food_name=food_name,
+                          amount=amount, price=price, is_collected=False,
+                          user_id=user_id)
+    db.session.add(new_order)
+    db.session.commit()
+    return True
 
 
 def update_food_collected(order_id, collect_status):

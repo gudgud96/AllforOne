@@ -4,22 +4,60 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Live chat </title>
-	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('.static', filename='/img/icon.jpg')}}" />
-<link href="{{url_for('.static', filename='main.css')}}" rel="stylesheet"></head>
+	<title>Food Preorder @ NTU</title>
+	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
+	<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
 
 <body>
 	<div class="login-page">
 		<div class="form">
-			<form class="login-form" method="POST" action="/orderfood">
-				<input type="text" placeholder="Stall Name" name="stall_name" />
-				<input type="text" placeholder="Food Name" name="food_name" />
-				<input type="text" placeholder="Amount" name="amount" />
-				<input type="text" placeholder="Price" name="price" />
+			<form class="login-form" method="POST" action="/order_food">
+				<h2>Food Preorder @ NTU</h2>
+				<br/>
+				<p>Skip the queue, save the hassle!</p>
+				<br/>
+				<select placeholder="Stall Name" name="stall_name">
+					<option value="North Spine Canteen">North Spine Canteen</option>
+					<option value="South Spine Canteen">South Spine Canteen</option>
+					<option value="The Quad">The Quad</option>
+					<option value="McDonald's">McDonald's</option>
+					<option value="Canteen 2">Canteen 2</option>
+				</select>
+				<select type="text" placeholder="Food Name" name="food_name">
+					<option value="Chicken Rice">Chicken Rice</option>
+					<option value="Salad">Salad</option>
+					<option value="Mixed Rice">Mixed Rice</option>
+					<option value="Pan Mee">Pan Mee</option>
+					<option value="Vegetarian">Vegetarian</option>
+				</select>
+				<select type="text" placeholder="Amount" name="amount" id="amount">
+					{% for i in range(10) %}
+					<option value="{{ i }}">{{ i }}</option>
+					{% endfor %}
+				</select>
+				<p id="price">Price: - </p>
+				<input style="display:none;" name="price" id="price-input">
+				<br/>
 				<button>create</button>
 			</form>
 		</div>
 	</div>
-<script type="text/javascript" src="{{url_for('.static', filename='index.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='signup.js')}}"></script><script type="text/javascript" src="{{url_for('.static', filename='login.js')}}"></script></body>
+
+	<script type="text/javascript">
+		/* event listener */
+		document.getElementById('amount').addEventListener('change', doThing);
+
+		/* function */
+		function doThing(){
+		   	var price = 3.20;	// hardcode first
+			var amount = document.getElementById('amount').value;
+			var total = parseFloat(Math.round(price * amount * 100) / 100).toFixed(2);
+			document.getElementById('price').innerHTML = "Price - SGD " + total;
+			document.getElementById('price-input').value = total;
+		}
+	</script>
+</body>
+
+</body>
 
 </html>
