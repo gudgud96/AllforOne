@@ -6,7 +6,18 @@ const customToolbar = {
 const homePage = {
   template: '#home',
   props: ['toggleMenu','payMenu'],
-  components: { customToolbar }
+  components: { customToolbar },
+  data() {
+    return {
+      spdVisible: true,
+      spdOpen: false
+    }
+  },
+  methods:{
+    push: function(page) {
+      this.$emit('push-page',page)
+    }
+  }
 };
 
 const foodPage = {
@@ -24,6 +35,7 @@ const tempPage = {
   },
   components: { customToolbar }
 };
+
 const libraryPage = {
   template: '#library',
   props: ['toggleMenu','payMenu','title','titlefull'],
@@ -33,6 +45,8 @@ const libraryPage = {
   },
   components: { customToolbar }
 };
+
+Vue.options.delimiters= ["[[", "]]"]
 
 app = new Vue({
   el: '#app',
