@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <!--HighChart-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 <body>
 
@@ -19,6 +21,8 @@
                     <th>Description</th>
                     <th>Type of Fault</th>
                     <th>Status</th>
+                    <th>Completed</th>
+                    <th>Taken time / Elapsed time</th>
                 </tr>
             </thead>
             {% for item in items %}
@@ -27,14 +31,53 @@
                 <td>{{ item.fault_description }}</td>
                 <td>{{ item.fault_type }}</td>
                 <td>{{ item.fault_status }}</td>
+                <td>{{ item.fault_completed }}</td>
+                <td>{{ item.fault_taken_time }}</td>
                 <td><a href="http://maps.ntu.edu.sg/maps#q:{{ item.fault_location }}" class="btn btn-primary" target="_blank">View on NTU Map</a></td>
             </tr>
             {% endfor %}
         </table>
 
-        <h3>Average time for solving a request: 1 days</h3>
+        <h3>Average time for solving a request: 10 Hours</h3>
         <p>For faster response, please call 67904777</p>
+        <div id="container" style="width:100%; height:400px;">
+
+        </div>
     </div>
+
+<script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function () {
+    var myChart = Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Average Fault Response Time for the Pass 6 Months (hours)'
+        },
+        xAxis: {
+            categories: ['Aug 18', 'Sep 18', 'Oct 18', 'Nov 18', 'Dec 18', 'Jan 19']
+        },
+        yAxis: {
+            title: {
+                text: 'Hours Taken (h)'
+            }
+        },
+        series: [{
+            name: 'Electrical',
+            data: [10, 10, 12, 14, 15, 12]
+        }, {
+            name: 'Plumbing',
+            data: [4, 6, 3, 6, 8, 10]
+        }, {
+            name: 'IT',
+            data: [2, 3, 5, 2, 1, 3]
+        }, {
+            name: 'Door Access',
+            data: [1, 2, 1, 3, 1, 2]
+        }]
+    });
+});
+</script>
 
 </body>
 </html>
