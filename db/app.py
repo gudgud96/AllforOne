@@ -105,6 +105,19 @@ class Fault(db.Model):
         return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
+class Clinic(db.Model):
+    id = db.Column(db.Integer , primary_key=True)
+    timestamp = db.Column(db.DateTime , index=True,default=datetime.datetime.now())
+    clinic = db.Column(db.String(50), default='NTU Fullerton')
+    booking_date = db.Column(db.String(15))
+    booking_time = db.Column(db.String(15))
+    description = db.Column(db.String(140))
+    user_id = db.Column(db.String(9), db.ForeignKey('user.id'))
+
+    def as_dict(self):
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
+
+
 # ================= Web Forms ==================== #
 class LoginForm(FlaskForm):
     username = StringField('username', validators=[InputRequired(), Length(min=4, max=15)])
@@ -261,7 +274,7 @@ def retrieve_all_events():
         result["events"].append(event.as_dict())
     return result
 
-# =================== UserTracker DB Endpoints ======================= #
+# =================== ExpensesTracker DB Endpoints ======================= #
 @app.route('/lifestyletrack', methods=['GET', 'POST'])
 def update_activity():
     if request.method == 'POST':
@@ -300,6 +313,24 @@ def fault_submit():
 @app.route('/fault_report')
 def fault_report():
     return render_template('fault_report.html', items=Fault.query.all())
+
+
+# =================== Clinic Service DB Endpoints ======================= #
+@app.route('/clinic_service', methods=['GET', 'POST'])
+def clinic_booking():
+    if request.method == 'POST':
+        data = request.form
+        new_id = len(Clinic.query.all())
+        new_order = Clinic(id=new_id, clinic=data['clinic'], booking_date=data['booking_date'],
+                              booking_time=data['booking_time'], description=data['description'],
+                              user_id=session['user_id'])
+        db.session.add(new_order)
+        db.session.commit()
+
+        return '<h1>Your request has been sent to {}!</h1>'.format(data['clinic'])
+
+    return render_template('clinic_service.html')
+
 
 
 if __name__ == '__main__':
