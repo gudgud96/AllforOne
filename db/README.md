@@ -1,6 +1,7 @@
 # How to launch the app:
 1. Start the server by running app.py python script
 2. Access the app via 127.0.0.1:5000
+3. On first use: Either sign up an account, or use account with username: 123, password: 123
 
 # Functions:
 1. Home: View latest events and notification
