@@ -52,7 +52,8 @@ const foodPage = {
       ns: 20,
       quad: 10,
       mcd: 4,
-      can2: 1
+      can2: 1,
+      modalVisible: false
     }
   },
   methods: {
@@ -190,6 +191,9 @@ const foodPage = {
         .catch(function (error) {
           alert('Fail:' + error)
         });
+    },
+    showModal() {
+      this.modalVisible = true
     }
   },
   computed:{
@@ -474,7 +478,9 @@ const faultPage = {
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
-      faultList: []
+      faultList: [],
+      modalVisible: false,
+      fabVisible: true
     }
   },
   methods: {
@@ -520,6 +526,9 @@ const faultPage = {
         .catch(error => {
           console.log(error)
         })
+    },
+    showModal() {
+      this.modalVisible = true
     }
   },
   components: { customToolbar },
