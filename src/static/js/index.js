@@ -273,6 +273,37 @@ const clinicPage = {
   components: { customToolbar }
 };
 
+const lifestyleTrackPage = {
+  template: '#lifestyletrack',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
+    }
+  },
+  components: { customToolbar },
+  methods: {
+    formLoad: function () {
+        $(document).ready( function() {
+		// set current datetime
+    	$('#datetime').val(new Date().toISOString().substring(0, 16));
+    	// set purchase UI
+    	$('#hasPurchase').click(function() {
+    		$("#purchase").toggle(this.checked);
+    		if(this.checked)
+    			$("#purchase").attr({"min" : 0.00, "display":block});
+			else
+    			$("#purchase").attr({"min" : -1, "value": -1, "display":none});
+		});
+	});
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.formLoad()
+    })
+  }
+};
+
 const lifestylePage = {
   template: '#lifestyle',
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
@@ -434,6 +465,7 @@ app = new Vue({
         Food: 'Food Payment',
         Bus: 'NTU Bus',
         Map: 'NTU Map',
+        LifestyleTrack: 'Input Your Lifestyle',
         Lifestyle: 'Your Lifestyle',
         Library: 'Library Functions',
         Booking: 'Booking Facilities',
@@ -448,6 +480,7 @@ app = new Vue({
         Home: 'static/src/event.png',
         Food: 'static/src/food.png',
         Bus: 'static/src/bus.png',
+        LifestyleTrack: 'static/src/jogging.png',
         Lifestyle: 'static/src/bike.png',
         Library: 'static/src/library.png',
         Booking: 'static/src/booking.png',
@@ -463,6 +496,7 @@ app = new Vue({
     Home: homePage,
     Food: foodPage,
     Bus: busPage,
+    LifestyleTrack: lifestyleTrackPage,
     Lifestyle: lifestylePage,
     Library: libraryPage,
     Booking: bookingPage,
