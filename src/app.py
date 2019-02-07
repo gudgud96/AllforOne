@@ -402,7 +402,11 @@ def fault_submit():
 
 @app.route('/fault/report')
 def fault_report():
-    return render_template('fault_report.html', items=Fault.query.all())
+    print('query start')
+    items=Fault.query.all()
+    print([item.as_dict() for item in items])
+    return json.dumps([item.as_dict() for item in items])
+    # return render_template('fault_report.html', items=Fault.query.all())
 
 
 # =================== Clinic Service DB Endpoints ======================= #
@@ -429,6 +433,8 @@ def clinic_report():
 
 
 if __name__ == '__main__':
+    # db.drop_all()
+    # db.create_all()
     users = User.query.all()
     orders = FoodOrder.query.all()
     clinics = Clinic.query.all()

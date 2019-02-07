@@ -416,6 +416,68 @@ const faultPage = {
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
+      faultList: []
+    }
+  },
+  methods: {
+    createChart: function () {
+      Highcharts.chart('container', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Average Fault Response Time for the Pass 6 Months (hours)'
+        },
+        xAxis: {
+            categories: ['Aug 18', 'Sep 18', 'Oct 18', 'Nov 18', 'Dec 18', 'Jan 19']
+        },
+        yAxis: {
+            title: {
+                text: 'Hours Taken (h)'
+            }
+        },
+        series: [{
+            name: 'Electrical',
+            data: [10, 10, 12, 14, 15, 12]
+        }, {
+            name: 'Plumbing',
+            data: [4, 6, 3, 6, 8, 10]
+        }, {
+            name: 'IT',
+            data: [2, 3, 5, 2, 1, 3]
+        }, {
+            name: 'Door Access',
+            data: [1, 2, 1, 3, 1, 2]
+        }]
+    })
+    },
+    get: function () {
+      var me = this
+      axios
+        .get('/fault/report')
+        .then(response => {
+          console.log(response.data)
+          me.faultList = response.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
+  components: { customToolbar },
+  mounted() {
+    this.$nextTick(function () {
+      this.get()
+      this.createChart()
+    })
+  },
+};
+
+const topupPage = {
+  template: '#topup',
+  props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
+  data() {
+    return {
     }
   },
   components: { customToolbar }
@@ -440,7 +502,8 @@ app = new Vue({
         Clinic: 'Clinic Services',
         Fault: 'Fault Reporting',
         Profile: 'Profile',
-        Event: 'Event Description'
+        Event: 'Event Description',
+        Topup: 'Wallet Topup'
       },
       imgsrc: {
         Home: 'static/src/event.png',
@@ -452,7 +515,7 @@ app = new Vue({
         Clinic: 'static/src/clinic.png',
         Fault: 'static/src/faulty.png',
         Map: 'static/src/map.png',
-        Profile: 'https://via.placeholder.com/70'
+        Topup: 'static/src/food.png'
       },
       openSide: false
     };
@@ -468,6 +531,7 @@ app = new Vue({
     Fault: faultPage,
     Map: mapPage,
     Profile: profilePage,
-    Event: eventPage
+    Event: eventPage,
+    Topup: topupPage
   }
 });
