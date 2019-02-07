@@ -46,14 +46,22 @@ const foodPage = {
   components: { customToolbar },
   data() {
     return {
-      amount: 1,
+      pageStack: [page1]
+    }
+  }
+};
+
+const page2 = {
+  key: 'page2',
+  template: '#page2',
+  data() {
+    return {
       items: [],
       ss: 10,
       ns: 20,
       quad: 10,
       mcd: 4,
-      can2: 1,
-      modalVisible: false
+      can2: 1
     }
   },
   methods: {
@@ -158,6 +166,32 @@ const foodPage = {
         .catch(error => {
           console.log(error)
         })
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.get()
+    })
+  }
+};
+
+const page1 = {
+  key: 'page1',
+  template: '#page1',
+  data() {
+    return {
+      items: [],
+      amount: 1
+    }
+  },
+  computed: {
+    price: function () {
+      return this.amount * 3.20;
+    }
+  },
+  methods: {
+    push() {
+      this.$emit('push-page', page2);
     },
     post: function () {
       var data = {
@@ -173,16 +207,15 @@ const foodPage = {
           console.log(response.data)
           if (response.data['is_consume']) {
             alert('Balance remaining: ' + response.data['balance'])
-            me.get();
             me.items.length = 0;
-            for(i=0; i<response.data['history'].length; i++){
-                me.items.push({
-                    timestamp: response.data['history'][i]['timestamp'],
-                    stall_name: response.data['history'][i]['stall_name'],
-                    food_name: response.data['history'][i]['food_name'],
-                    amount: response.data['history'][i]['amount'],
-                    price: response.data['history'][i]['price']
-                })
+            for (i = 0; i < response.data['history'].length; i++) {
+              me.items.push({
+                timestamp: response.data['history'][i]['timestamp'],
+                stall_name: response.data['history'][i]['stall_name'],
+                food_name: response.data['history'][i]['food_name'],
+                amount: response.data['history'][i]['amount'],
+                price: response.data['history'][i]['price']
+              })
             }
           } else {
             alert('You do not have enough credit! Please top up at "Menu -> Wallet Topup" before purchasing.\nBalance remaining: ' + response.data['balance'])
@@ -192,20 +225,32 @@ const foodPage = {
           alert('Fail:' + error)
         });
     },
-    showModal() {
-      this.modalVisible = true
+    get: function () {
+      var me = this
+      axios
+        .get('/order_food')
+        .then(response => {
+          console.log(response.data)
+          for (i = 0; i < response.data['history'].length; i++) {
+            me.items.push({
+              timestamp: response.data['history'][i]['timestamp'],
+              stall_name: response.data['history'][i]['stall_name'],
+              food_name: response.data['history'][i]['food_name'],
+              amount: response.data['history'][i]['amount'],
+              price: response.data['history'][i]['price']
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
-  computed:{
-    price: function(){
-        return this.amount * 3.20;
-    }
-  },
-  mounted: function () {
+  mounted() {
     this.$nextTick(function () {
       this.get()
     })
-  }
+  },
 };
 
 const tempPage = {

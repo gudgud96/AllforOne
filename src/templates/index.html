@@ -129,8 +129,7 @@
                     Hack-and-roll
                 </div>
                 <ons-row class="content">
-                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI"
-                            style="width: 100%">
+                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI" style="width: 100%">
                     </ons-col>
                     <ons-col width="10%">
 
@@ -153,13 +152,13 @@
     <template id="topup">
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-card>
+            <v-ons-card style="text-align: center">
                 <form class="login-form" method="POST" action="/topup">
                     <h2>Credit Top Up @ NTU</h2>
                     <br />
                     <p>Select your topup amount.</p>
                     <br />
-                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
+                    <select class="select-input select-input--material inline" type="text" placeholder="Amount" name="amount"
                         id="amount">
                         <option value="10">10</option>
                         <option value="20">20</option>
@@ -168,7 +167,7 @@
                         <option value="100">100</option>
                     </select>
                     <br /> <br>
-                    <button class="button button--material">Top Up</button>
+                    <button class="button button--material inline">Top Up</button>
                 </form>
             </v-ons-card>
         </v-ons-page>
@@ -187,8 +186,7 @@
                     Hack and Roll
                 </div>
                 <ons-row class="content">
-                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI"
-                            style="width: 100%">
+                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI" style="width: 100%">
                     </ons-col>
                     <ons-col width="10%">
 
@@ -212,8 +210,7 @@
                     Chinese New Year
                 </div>
                 <ons-row class="content">
-                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI"
-                            style="width: 100%">
+                    <ons-col width="30%"><img src="https://picsum.photos/400/300" alt="Onsen UI" style="width: 100%">
                     </ons-col>
                     <ons-col width="10%">
 
@@ -232,11 +229,11 @@
             </v-ons-card>
 
             <h3 style="margin-left: 10px">Lifestyle Update</h3>
-            <v-ons-card>
+            <v-ons-card style="text-align: center">
                 <div class="title">
                     Lifestyle
                 </div>
-                <form id="lifestyleTrack" method="POST" action="/lifestyletrack" style="text-align: center">
+                <form id="lifestyleTrack" method="POST" action="/lifestyletrack">
                     <br />
                     <input class="text-input text-input--material inline" type="datetime-local" id="datetime" name="timestamp"
                         required /> <br><br>
@@ -317,12 +314,21 @@
     <template id="food">
         <v-ons-page>
             <custom-toolbar title="Food Payment" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-card>
+
+            <v-ons-navigator swipeable :page-stack="pageStack" @push-page="pageStack.push($event)"></v-ons-navigator>
+
+        </v-ons-page>
+    </template>
+
+
+    <template id="page1">
+        <v-ons-page>
+            <v-ons-card style="text-align: center">
                 <h2>Food Preorder @ NTU</h2>
                 <br />
                 <p>Skip the queue, save the hassle!</p>
                 <br />
-                <select class="select-input select-input--material" placeholder="Stall Name" id="stall_name" name="stall_name">
+                <select class="select-input select-input--material inline" placeholder="Stall Name" id="stall_name" name="stall_name">
                     <option value="North Spine Canteen">North Spine Canteen</option>
                     <option value="South Spine Canteen">South Spine Canteen</option>
                     <option value="The Quad">The Quad</option>
@@ -330,7 +336,7 @@
                     <option value="Canteen 2">Canteen 2</option>
                 </select>
                 <br />
-                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name"
+                <select class="select-input select-input--material inline" type="text" placeholder="Food Name" name="food_name"
                     id="food_name">
                     <option value="Chicken Rice">Chicken Rice</option>
                     <option value="Salad">Salad</option>
@@ -339,57 +345,63 @@
                     <option value="Vegetarian">Vegetarian</option>
                 </select>
                 <br />
-                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount"
+                <select class="select-input select-input--material inline" type="text" placeholder="Amount" name="amount" id="amount"
                     v-model="amount">
                     <option v-for="n in 10" :value="n">[[ n ]]</option>
                 </select>
                 <br />
                 <p>Price: SGD [[ price.toFixed(2) ]] </p>
-                <input style="display:none;" class="text-input text-input--material" name="price" id="price" v-model="price">
+                <input style="display:none;" class="text-input text-input--material inline" name="price" id="price" v-model="price">
                 <br />
-                <button class="button button--material" @click="post">Create</button>
-                <button class="button button--material" @click="modalVisible = true">View History</button>
+                <button class="button button--material inline" @click="post">Create</button>
+                <button class="button button--material--flat inline" @click="push">View History</button>
             </v-ons-card>
+            <v-ons-card>
+                <h2>Your food order history</h2>
+                <br />
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Stall</th>
+                            <th>Food</th>
+                            <th>Amt</th>
+                            <th>Price</th>
+                            <th>Collected?</th>
+                        </tr>
+                    </thead>
+                    <tr v-for="(item,index) in items">
+                        <td>[[ item.timestamp ]]</td>
+                        <td>[[ item.stall_name ]]</td>
+                        <td>[[ item.food_name ]]</td>
+                        <td>[[ item.amount ]]</td>
+                        <td>[[ item.price ]]</td>
+                        <td>Yes</td>
+                    </tr>
+                </table>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
 
-            <v-ons-modal :visible="modalVisible" @click="modalVisible = false">
-                <div class="modal__content" style="color:black">
-                    <v-ons-card>
-                        <h2>Your food order history</h2>
-                        <br />
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Stall</th>
-                                    <th>Food</th>
-                                    <th>Amount</th>
-                                    <th>Price</th>
-                                    <th>Collected?</th>
-                                </tr>
-                            </thead>
-                            <tr v-for="(item,index) in items" v-if="index > (items.length - 3)">
-                                <td>[[ item.timestamp ]]</td>
-                                <td>[[ item.stall_name ]]</td>
-                                <td>[[ item.food_name ]]</td>
-                                <td>[[ item.amount ]]</td>
-                                <td>[[ item.price ]]</td>
-                                <td>Yes</td>
-                            </tr>
-                        </table>
-
-                        <h3>Your Top 5 Canteens</h3>
-                        <div id="canvas-holder">
-                            <canvas id="chart-area"></canvas>
-                        </div>
-
-                        <h3>NTU Top 5 Canteens</h3>
-                        <div id="canvas-holder-2">
-                            <canvas id="chart-area-2"></canvas>
-                        </div>
-                    </v-ons-card>
+    <template id="page2">
+        <v-ons-page>
+            <v-ons-toolbar>
+                <div class="left">
+                    <v-ons-back-button>Page 1</v-ons-back-button>
                 </div>
-            </v-ons-modal>
+                <div class="center">Chart</div>
+            </v-ons-toolbar>
+            <v-ons-card>
+                <h3>Your Top 5 Canteens</h3>
+                <div id="canvas-holder">
+                    <canvas id="chart-area"></canvas>
+                </div>
 
+                <h3>NTU Top 5 Canteens</h3>
+                <div id="canvas-holder-2">
+                    <canvas id="chart-area-2"></canvas>
+                </div>
+            </v-ons-card>
         </v-ons-page>
     </template>
 
@@ -648,14 +660,14 @@
     <template id="fault">
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-modal :visible="modalVisible" >
+            <v-ons-modal :visible="modalVisible">
                 <v-ons-card>
                     <div style="color:black; text-align: center">
                         <form class="login-form" method="POST" action="/fault/submit">
                             <h2>Fault Reporting</h2>
                             <br />
                             <input class="text-input text-input--material inline" type="text" placeholder="Fault Location"
-                                name="fault_location" required/><br><br>
+                                name="fault_location" required /><br><br>
                             <textarea class="textarea inline" rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
                             <br><br>
                             Type of Fault:

@@ -289,6 +289,16 @@ def order_food():
             balance = "{:.2f}".format(user.credit_amount)
             return json.dumps({"balance": balance, "is_consume": False})
             # return render_template('order_unsuccessful.html', balance=balance)
+    
+    elif request.method == 'GET':
+        food_order_results = FoodOrder.query.filter_by(user_id=session["user_id"]).all()
+        history = []
+        for res in food_order_results:
+            temp = res.as_dict()
+            temp["timestamp"] = temp["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
+            temp["price"] = str(temp["price"])
+            history.append(temp)
+        return json.dumps({"history": history})
 
     return render_template('food_order.html')
 
