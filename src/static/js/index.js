@@ -36,7 +36,7 @@ const foodPage = {
   components: { customToolbar },
   data() {
     return {
-      price: 3.20,
+      amount: 1,
       items: [],
       ss: 10,
       ns: 20,
@@ -50,7 +50,6 @@ const foodPage = {
       var randomScalingFactor = function () {
         return Math.round(Math.random() * 100);
       };
-
       var config = {
         type: 'pie',
         data: {
@@ -133,6 +132,22 @@ const foodPage = {
       var ctx2 = document.getElementById('chart-area-2').getContext('2d');
       window.myPie = new Chart(ctx2, config2);
     },
+    get: function () {
+      axios
+        .get('/food_history')
+        .then(response => {
+          console.log(response.data)
+          this.ns = response.data['ns']
+          this.ss = response.data['ss']
+          this.quad = response.data['quad']
+          this.mcd = response.data['mcd']
+          this.can2 = response.data['can2']
+          this.createChart();
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     post: function () {
       var data = {
         stall_name: document.getElementById('stall_name').value,
@@ -144,34 +159,35 @@ const foodPage = {
       var me = this
       axios.post('/order_food', data)
         .then(function (response) {
-          console.log(response)
-          alert('Balance remaining: ' + response.data['balance'])
-          me.items.push({
-            timestamp: 'Just now',
-            stall_name: data.stall_name,
-            food_name: data.food_name,
-            amount: data.amount,
-            price: data.price
-          })
+          console.log(response.data)
+          if (response.data['is_consume']) {
+            alert('Balance remaining: ' + response.data['balance'])
+            me.get();
+            for(i=0; i<response.data['history'].length; i++){
+                me.items.push({
+                    timestamp: response.data['history'][i]['timestamp'],
+                    stall_name: response.data['history'][i]['stall_name'],
+                    food_name: response.data['history'][i]['food_name'],
+                    amount: response.data['history'][i]['amount'],
+                    price: response.data['history'][i]['price']
+                })
+            }
+          } else {
+            alert('You do not have enough credit! Please top up at "Menu -> Wallet Topup" before purchasing.\nBalance remaining: ' + response.data['balance'])
+          }
         })
         .catch(function (error) {
           alert('Fail:' + error)
         });
-    },
-    get: function () {
-      axios
-        .get('/food_history')
-        .then(response => {
-          console.log(response.data)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    }
+  },
+  computed:{
+    price: function(){
+        return this.amount * 3.20;
     }
   },
   mounted: function () {
     this.$nextTick(function () {
-      this.createChart()
       this.get()
     })
   }

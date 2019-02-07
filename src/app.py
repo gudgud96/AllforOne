@@ -269,12 +269,20 @@ def order_food():
             if is_consume:
                 user = User.query.filter_by(id=session["user_id"]).first()
                 balance = "{:.2f}".format(user.credit_amount)
+                food_order_results = FoodOrder.query.filter_by(user_id=session["user_id"]).all()
+                history = []
+                for res in food_order_results:
+                    temp = res.as_dict()
+                    temp["timestamp"] = temp["timestamp"].strftime("%Y-%m-%d %H:%M:%S")
+                    temp["price"] = str(temp["price"])
+                    history.append(temp)
+                print(history)
                 # return render_template('order_finish.html', balance=balance)
-                return json.dumps({"balance": balance})
+                return json.dumps({"balance": balance, "is_consume": True, "history": history})
             else:
                 user = User.query.filter_by(id=session["user_id"]).first()
                 balance = "{:.2f}".format(user.credit_amount)
-                return json.dumps({"balance": balance})
+                return json.dumps({"balance": balance, "is_consume": False})
                 # return render_template('order_unsuccessful.html', balance=balance)
 
         return render_template('form_result.html', route = '/order_food', result = 'Failed!', msg = 'Your order is not sent! Contact administrator')
