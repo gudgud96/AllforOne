@@ -31,6 +31,7 @@
             color:#1E88E5;
         }
         a:visited {color:#1E88E5;}
+        .inline{display: inline-block;width:80%}
     </style>
 </head>
 
@@ -55,6 +56,12 @@
                             </div>
                             <div class="center">Home</div>
                         </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Lifestyle'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Lifestyle']" alt="Icon">
+                            </div>
+                            <div class="center">Your Lifestyle</div>
+                        </v-ons-list-item>
                         <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Food'; openSide = false">
                             <div class="left">
                                 <img class="list-item__thumbnail" :src="imgsrc['Food']" alt="Icon">
@@ -78,12 +85,6 @@
                                 <img class="list-item__thumbnail" :src="imgsrc['Map']" alt="Icon">
                             </div>
                             <div class="center">NTU Map</div>
-                        </v-ons-list-item>
-                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Lifestyle'; openSide = false">
-                            <div class="left">
-                                <img class="list-item__thumbnail" :src="imgsrc['Lifestyle']" alt="Icon">
-                            </div>
-                            <div class="center">Your Lifestyle</div>
                         </v-ons-list-item>
                         <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Library'; openSide = false">
                             <div class="left">
@@ -158,15 +159,16 @@
                     <br />
                     <p>Select your topup amount.</p>
                     <br />
-                    <select type="text" placeholder="Amount" name="amount" id="amount">
+                    <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
+                        id="amount">
                         <option value="10">10</option>
                         <option value="20">20</option>
                         <option value="30">30</option>
                         <option value="50">50</option>
                         <option value="100">100</option>
                     </select>
-                    <br />
-                    <button>Top Up</button>
+                    <br /> <br>
+                    <button class="button button--material">Top Up</button>
                 </form>
             </v-ons-card>
         </v-ons-page>
@@ -234,27 +236,31 @@
             </v-ons-card>
 
             <p style="text-align: center">
-                Lifestyle Summary
+                Lifestyle Update
             </p>
             <v-ons-card>
                 <div class="title">
-                    Recent Activities
+                    Lifestyle
                 </div>
-                <form id="lifestyleTrack" method="POST" action="/lifestyletrack">
+                <form id="lifestyleTrack" method="POST" action="/lifestyletrack" style="text-align: center">
                     <br />
-                    <input class="text-input text-input--material" type="datetime-local" id="datetime" name="timestamp" required/> <br>
-                    <input class="text-input text-input--material" type="text" placeholder="Location" name="location" required/> <br>
-                    <input class="text-input text-input--material" type="text" placeholder="Activity" name="activity" required/> <br>
-                    <textarea class="textarea" placeholder="Activity Description" name="description"></textarea> <br>
+                    <input class="text-input text-input--material inline" type="datetime-local" id="datetime" name="timestamp"
+                        required /> <br><br>
+                    <input class="text-input text-input--material inline" type="text" placeholder="Location" name="location"
+                        required /> <br><br>
+                    <input class="text-input text-input--material inline" type="text" placeholder="Activity" name="activity"
+                        required /> <br><br>
+                    <textarea class="textarea inline" placeholder="Activity Description" name="description"></textarea>
+                    <br><br>
                     <label class="checkbox checkbox--material">
                         <input type="checkbox" class="checkbox__input checkbox--material__input" v-model="hasPurchase"
                             checked="unchecked">
                         <div class="checkbox__checkmark checkbox--material__checkmark"></div>
                         Has Expenses?
                     </label> <br>
-                    <input class="text-input text-input--material" v-if="hasPurchase"
-                        placeholder="Expense Amount" type="number" name="purchase" min="0" step="0.1" /> <br>
-                    <button class="button button--material">create</button>
+                    <input class="text-input text-input--material inline" v-if="hasPurchase" placeholder="Expense Amount"
+                        type="number" name="purchase" min="0" step="0.1" /> <br><br>
+                    <button class="button button--material">create new activity</button>
                 </form>
             </v-ons-card>
 
@@ -262,6 +268,10 @@
                 <v-ons-fab>
                     <v-ons-icon icon="md-plus"></v-ons-icon>
                 </v-ons-fab>
+
+                <v-ons-speed-dial-item @click="push('Topup')">
+                    <img src="static/src/topup.png" alt="Bus" style="width: 1.25em">
+                </v-ons-speed-dial-item>
 
                 <v-ons-speed-dial-item @click="push('Bus')">
                     <img src="static/src/bus.png" alt="Bus" style="width: 1.25em">
@@ -335,53 +345,57 @@
                     <option value="Vegetarian">Vegetarian</option>
                 </select>
                 <br />
-                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount" v-model="amount">
+                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount"
+                    v-model="amount">
                     <option v-for="n in 10" :value="n">[[ n ]]</option>
                 </select>
                 <br />
-                <p>Price: - SGD [[ price.toFixed(2) ]] </p>
+                <p>Price: SGD [[ price.toFixed(2) ]] </p>
                 <input style="display:none;" class="text-input text-input--material" name="price" id="price" v-model="price">
                 <br />
                 <button class="button button--material" @click="post">Create</button>
+                <button class="button button--material" @click="modalVisible = true">View History</button>
             </v-ons-card>
-            <v-ons-card>
-                <h2>Your food order history</h2>
-                <br />
-                <table class="table table-hover">
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Stall Name</th>
-                            <th>Food Name</th>
-                            <th>Amount</th>
-                            <th>Price</th>
-                            <th>Collected?</th>
-                        </tr>
-                    </thead>
-                    <tr v-for="item in items">
-                        <td>[[ item.timestamp ]]</td>
-                        <td>[[ item.stall_name ]]</td>
-                        <td>[[ item.food_name ]]</td>
-                        <td>[[ item.amount ]]</td>
-                        <td>[[ item.price ]]</td>
-                        <td>Yes</td>
-                    </tr>
-                </table>
 
-                <div class="col-md-6">
-                    <h3>Your Top 5 Canteens</h3>
-                    <div id="canvas-holder">
-                        <canvas id="chart-area"></canvas>
-                    </div>
-                </div>
+            <v-ons-modal :visible="modalVisible" @click="modalVisible = false">
+                <div class="modal__content" style="color:black">
+                    <v-ons-card>
+                        <h2>Your food order history</h2>
+                        <br />
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Stall</th>
+                                    <th>Food</th>
+                                    <th>Amount</th>
+                                    <th>Price</th>
+                                    <th>Collected?</th>
+                                </tr>
+                            </thead>
+                            <tr v-for="(item,index) in items" v-if="index > (items.length - 3)">
+                                <td>[[ item.timestamp ]]</td>
+                                <td>[[ item.stall_name ]]</td>
+                                <td>[[ item.food_name ]]</td>
+                                <td>[[ item.amount ]]</td>
+                                <td>[[ item.price ]]</td>
+                                <td>Yes</td>
+                            </tr>
+                        </table>
 
-                <div class="col-md-6">
-                    <h3>NTU Top 5 Canteens</h3>
-                    <div id="canvas-holder-2">
-                        <canvas id="chart-area-2"></canvas>
-                    </div>
+                        <h3>Your Top 5 Canteens</h3>
+                        <div id="canvas-holder">
+                            <canvas id="chart-area"></canvas>
+                        </div>
+
+                        <h3>NTU Top 5 Canteens</h3>
+                        <div id="canvas-holder-2">
+                            <canvas id="chart-area-2"></canvas>
+                        </div>
+                    </v-ons-card>
                 </div>
-            </v-ons-card>
+            </v-ons-modal>
+
         </v-ons-page>
     </template>
 
@@ -413,22 +427,21 @@
             <v-ons-card>
                 <div class="login-page">
                     <div class="form">
-                        <form class="login-form" method="POST" action="/clinic_service">
+                        <form method="POST" action="/clinic_service" style="text-align: center">
                             <h2>Clinic Service</h2>
-                            <br />
-                            <input class="text-input text-input--material" placeholder="Clinic" name="clinic" type="text"
-                                required>
-
-                            <br /><input class="text-input text-input--material" placeholder="Booking Date" name="booking_date"
+                            <br /><br />
+                            <input class="text-input text-input--material inline" placeholder="Clinic" name="clinic"
                                 type="text" required>
 
-                            <br /><input class="text-input text-input--material" placeholder="Booking Time" name="booking_time"
-                                type="text" required>
+                            <br /><br /><input class="text-input text-input--material inline" placeholder="Booking Date"
+                                name="booking_date" type="text" required>
 
+                            <br /><br /><input class="text-input text-input--material inline" placeholder="Booking Time"
+                                name="booking_time" type="text" required>
 
-                            <br /><textarea class="textarea" rows="3" placeholder="Description" name="description"></textarea>
-                            <br>
-                            <button type="submit" class="button button--material">Create</button>
+                            <br /><br /><textarea class="textarea inline" rows="3" placeholder="Description" name="description"></textarea>
+                            <br><br />
+                            <button type="submit" class="button button--material inline">Create</button>
                         </form>
                     </div>
                 </div>
@@ -641,27 +654,31 @@
     <template id="fault">
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <v-ons-card>
-                <div class="form">
-                    <form class="login-form" method="POST" action="/fault/submit">
-                        <h2>Fault Reporting</h2>
-                        <br />
-                        <input class="text-input text-input--material" type="text" placeholder="Fault Location" name="fault_location" />
-                        <textarea class="textarea" rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
-                        <br>
-                        Type of Fault:
-                        <br>
-                        <select class="select-input select-input--material" placeholder="Type of Fault" name="fault_type">
-                            <option value="electrical" selected>Electrical</option>
-                            <option value="plumbing">Plumbing</option>
-                            <option value="IT">IT</option>
-                            <option value="door_access">Door Access</option>
-                        </select>
-                        <br><br>
-                        <button class="button button--material">Submit</button>
-                    </form>
-                </div>
-            </v-ons-card>
+            <v-ons-modal :visible="modalVisible" >
+                <v-ons-card>
+                    <div style="color:black; text-align: center">
+                        <form class="login-form" method="POST" action="/fault/submit">
+                            <h2>Fault Reporting</h2>
+                            <br />
+                            <input class="text-input text-input--material inline" type="text" placeholder="Fault Location"
+                                name="fault_location" required/><br><br>
+                            <textarea class="textarea inline" rows="4" cols="20" placeholder="Description" name="fault_description"></textarea>
+                            <br><br>
+                            Type of Fault:
+                            <br>
+                            <select class="select-input select-input--material inline" placeholder="Type of Fault" name="fault_type">
+                                <option value="electrical" selected>Electrical</option>
+                                <option value="plumbing">Plumbing</option>
+                                <option value="IT">IT</option>
+                                <option value="door_access">Door Access</option>
+                            </select>
+                            <br><br>
+                            <button class="button button--material inline">Submit</button>
+                        </form><br><br>
+                        <a @click="modalVisible = false">Close</a>
+                    </div>
+                </v-ons-card>
+            </v-ons-modal>
             <v-ons-card>
                 <div class="title">
                     Fault Reporting Status
@@ -685,8 +702,7 @@
                         <td>[[ item.fault_status ]]</td>
                         <!-- <td>[[ item.fault_completed ]]</td> -->
                         <td>[[ item.fault_taken_time ]]</td>
-                        <td><a :href="'http://maps.ntu.edu.sg/maps#q:' + item.fault_location" target="_blank">View on
-                                NTU Map</a></td>
+                        <td><a :href="'http://maps.ntu.edu.sg/maps#q:' + item.fault_location" target="_blank">Map</a></td>
                     </tr>
                 </table>
 
@@ -696,6 +712,10 @@
 
                 </div>
             </v-ons-card>
+
+            <v-ons-fab position="bottom right" :visible="fabVisible" @click="modalVisible = true">
+                <v-ons-icon icon="md-plus"></v-ons-icon>
+            </v-ons-fab>
         </v-ons-page>
     </template>
 
