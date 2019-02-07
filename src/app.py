@@ -363,7 +363,7 @@ def update_activity():
         activity_update = UserTracker(id=new_id ,timestamp = date_time_obj,
                                       location = data['location'], activity = data['activity'],
                                       description = data['description'],
-                                      purchase = data['purchase'],
+                                      purchase = data.get("purchase", -1),
                                       user_id=session['user_id'])
         db.session.add(activity_update)
         db.session.commit()

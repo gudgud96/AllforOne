@@ -79,12 +79,6 @@
                             </div>
                             <div class="center">NTU Map</div>
                         </v-ons-list-item>
-                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'LifestyleTrack'; openSide = false">
-                            <div class="left">
-                                <img class="list-item__thumbnail" :src="imgsrc['LifestyleTrack']" alt="Icon">
-                            </div>
-                            <div class="center">Lifestyle Input</div>
-                        </v-ons-list-item>
                         <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Lifestyle'; openSide = false">
                             <div class="left">
                                 <img class="list-item__thumbnail" :src="imgsrc['Lifestyle']" alt="Icon">
@@ -246,16 +240,22 @@
                 <div class="title">
                     Recent Activities
                 </div>
-                <ons-row class="content">
-                    <br>
-                    <ons-col width="100%">Coding Competition</ons-col>
-                    <br><br>
-                    <ons-col width="100%">Marathon</ons-col>
-                </ons-row>
-                <br>
-                <v-ons-button @click="push('Lifestyle')">
-                    View more
-                </v-ons-button>
+                <form id="lifestyleTrack" method="POST" action="/lifestyletrack">
+                    <br />
+                    <input class="text-input text-input--material" type="datetime-local" id="datetime" name="timestamp" required/> <br>
+                    <input class="text-input text-input--material" type="text" placeholder="Location" name="location" required/> <br>
+                    <input class="text-input text-input--material" type="text" placeholder="Activity" name="activity" required/> <br>
+                    <textarea class="textarea" placeholder="Activity Description" name="description"></textarea> <br>
+                    <label class="checkbox checkbox--material">
+                        <input type="checkbox" class="checkbox__input checkbox--material__input" v-model="hasPurchase"
+                            checked="unchecked">
+                        <div class="checkbox__checkmark checkbox--material__checkmark"></div>
+                        Has Expenses?
+                    </label> <br>
+                    <input class="text-input text-input--material" v-if="hasPurchase"
+                        placeholder="Expense Amount" type="number" name="purchase" min="0" step="0.1" /> <br>
+                    <button class="button button--material">create</button>
+                </form>
             </v-ons-card>
 
             <v-ons-speed-dial position="bottom right" direction="up" :visible="spdVisible" :open.sync="spdOpen">
@@ -339,7 +339,7 @@
                 <p>Price: - SGD [[ price.toFixed(2) ]] </p>
                 <input class="text-input text-input--material" name="price" id="price" v-model="price">
                 <br />
-                <button class="button" @click="post">Create</button>
+                <button class="button button--material" @click="post">Create</button>
             </v-ons-card>
             <v-ons-card>
                 <h2>Your food order history</h2>
@@ -425,7 +425,7 @@
 
                             <br /><textarea class="textarea" rows="3" placeholder="Description" name="description"></textarea>
                             <br>
-                            <button type="submit" class="button">Create</button>
+                            <button type="submit" class="button button--material">Create</button>
                         </form>
                     </div>
                 </div>
@@ -580,26 +580,6 @@
         </v-ons-page>
     </template>
 
-    <template id="lifestyletrack">
-        <v-ons-page>
-            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
-            <div>
-                <div class="form">
-                    <form class="login-form" method="POST" action="/lifestyletrack">
-                        <br/>
-                        <input type="datetime-local" id="datetime" name="timestamp" />
-                        <input type="text" placeholder="Location" name="location" />
-                        <input type="text" placeholder="Activity" name="activity" />
-                        <input type="textarea" placeholder="Activity Description" name="description" />
-                        <input type="checkbox" id="hasPurchase" style="width: min-content;"> Has Expenses?</input>
-                        <input type="number" id="purchase" min="0.00" step="0.10" name="purchase" value = "0.00" style="display:none"/>
-                        <button>create</button>
-                    </form>
-                </div>
-            </div>
-        </v-ons-page>
-    </template>
-
     <template id="lifestyle">
         <v-ons-page>
             <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
@@ -675,7 +655,7 @@
                             <option value="door_access">Door Access</option>
                         </select>
                         <br><br>
-                        <button class="button">Submit</button>
+                        <button class="button button--material">Submit</button>
                     </form>
                 </div>
             </v-ons-card>
@@ -702,8 +682,8 @@
                         <td>[[ item.fault_status ]]</td>
                         <!-- <td>[[ item.fault_completed ]]</td> -->
                         <td>[[ item.fault_taken_time ]]</td>
-                        <td><a :href="'http://maps.ntu.edu.sg/maps#q:' + item.fault_location"
-                                target="_blank">View on NTU Map</a></td>
+                        <td><a :href="'http://maps.ntu.edu.sg/maps#q:' + item.fault_location" target="_blank">View on
+                                NTU Map</a></td>
                     </tr>
                 </table>
 

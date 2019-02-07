@@ -10,14 +10,24 @@ const homePage = {
   data() {
     return {
       spdVisible: true,
-      spdOpen: false
+      spdOpen: false,
+      hasPurchase: false
     }
   },
   methods: {
     push: function (page) {
       this.$emit('push-page', page)
+    },
+    formLoad: function () {
+      // set current datetime
+      $('#datetime').val(new Date().toISOString().substring(0, 16));
     }
-  }
+  },
+  mounted() {
+    this.$nextTick(function () {
+      this.formLoad()
+    })
+  },
 };
 
 const eventPage = {
@@ -283,18 +293,18 @@ const lifestyleTrackPage = {
   components: { customToolbar },
   methods: {
     formLoad: function () {
-        $(document).ready( function() {
-		// set current datetime
-    	$('#datetime').val(new Date().toISOString().substring(0, 16));
-    	// set purchase UI
-    	$('#hasPurchase').click(function() {
-    		$("#purchase").toggle(this.checked);
-    		if(this.checked)
-    			$("#purchase").attr({"min" : 0.00, "display":block});
-			else
-    			$("#purchase").attr({"min" : -1, "value": -1, "display":none});
-		});
-	});
+      $(document).ready(function () {
+        // set current datetime
+        $('#datetime').val(new Date().toISOString().substring(0, 16));
+        // set purchase UI
+        $('#hasPurchase').click(function () {
+          $("#purchase").toggle(this.checked);
+          if (this.checked)
+            $("#purchase").attr({ "min": 0.00, "display": block });
+          else
+            $("#purchase").attr({ "min": -1, "value": -1, "display": none });
+        });
+      });
     }
   },
   mounted: function () {
@@ -454,33 +464,33 @@ const faultPage = {
     createChart: function () {
       Highcharts.chart('container', {
         chart: {
-            type: 'column'
+          type: 'column'
         },
         title: {
-            text: 'Average Fault Response Time for the Pass 6 Months (hours)'
+          text: 'Average Fault Response Time for the Pass 6 Months (hours)'
         },
         xAxis: {
-            categories: ['Aug 18', 'Sep 18', 'Oct 18', 'Nov 18', 'Dec 18', 'Jan 19']
+          categories: ['Aug 18', 'Sep 18', 'Oct 18', 'Nov 18', 'Dec 18', 'Jan 19']
         },
         yAxis: {
-            title: {
-                text: 'Hours Taken (h)'
-            }
+          title: {
+            text: 'Hours Taken (h)'
+          }
         },
         series: [{
-            name: 'Electrical',
-            data: [10, 10, 12, 14, 15, 12]
+          name: 'Electrical',
+          data: [10, 10, 12, 14, 15, 12]
         }, {
-            name: 'Plumbing',
-            data: [4, 6, 3, 6, 8, 10]
+          name: 'Plumbing',
+          data: [4, 6, 3, 6, 8, 10]
         }, {
-            name: 'IT',
-            data: [2, 3, 5, 2, 1, 3]
+          name: 'IT',
+          data: [2, 3, 5, 2, 1, 3]
         }, {
-            name: 'Door Access',
-            data: [1, 2, 1, 3, 1, 2]
+          name: 'Door Access',
+          data: [1, 2, 1, 3, 1, 2]
         }]
-    })
+      })
     },
     get: function () {
       var me = this
@@ -559,7 +569,6 @@ app = new Vue({
     Home: homePage,
     Food: foodPage,
     Bus: busPage,
-    LifestyleTrack: lifestyleTrackPage,
     Lifestyle: lifestylePage,
     Library: libraryPage,
     Booking: bookingPage,
@@ -579,8 +588,8 @@ app = new Vue({
           console.log(response.data)
           me.main_name = response.data['name']
           me.main_matric = response.data['user_id']
-//          me.email = response.data['email']
-//          me.credit_amount = response.data['credit_amount']
+          //          me.email = response.data['email']
+          //          me.credit_amount = response.data['credit_amount']
         })
         .catch(error => {
           console.log(error)
