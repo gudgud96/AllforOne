@@ -503,7 +503,9 @@ app = new Vue({
         Fault: 'Fault Reporting',
         Profile: 'Profile',
         Event: 'Event Description',
-        Topup: 'Wallet Topup'
+        Topup: 'Wallet Topup',
+        main_name: "Chong Bing Sheng",
+        main_matric: "U1500034F"
       },
       imgsrc: {
         Home: 'static/src/event.png',
@@ -533,5 +535,27 @@ app = new Vue({
     Profile: profilePage,
     Event: eventPage,
     Topup: topupPage
+  },
+  methods: {
+    get: function () {
+      var me = this
+      axios
+        .get('/profile')
+        .then(response => {
+          console.log(response.data)
+          me.main_name = response.data['name']
+          me.main_matric = response.data['user_id']
+//          me.email = response.data['email']
+//          me.credit_amount = response.data['credit_amount']
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
+  mounted: function () {
+    this.$nextTick(function () {
+      this.get()
+    })
   }
 });
