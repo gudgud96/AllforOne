@@ -18,7 +18,7 @@ Some existing services may already be secure and robust enough, so there is no n
 
 
 # Features included
-![menubar](https://github.com/pakzan/AllforOne/blob/master/readme_pic/menubar.png) ![homepage](https://github.com/pakzan/AllforOne/blob/master/readme_pic/homepage.png)
+![menubar and homepage](https://github.com/pakzan/AllforOne/blob/master/readme_pic/menubar.png)
 > Figure 2: ​ Menu Bar ​ and ​ Home Page ​ of our app. We do provide a whole lot of smart school services!
 
 ## QR Matriculation Card - 
@@ -30,7 +30,7 @@ Ever want to skip long queues in canteens? Now you can **pre-order** your meal a
 ## Lifestyle Tracker - 
 The user-friendly service will guide you to a balance lifestyle in university. The basic features of this tracker will analyze users’ **monthly expenses**, and provide users with a **heatmap** of most visited locations in university areas. The future features will even provide users with research results and user customization towards healthy lifestyle.
 
-![QR](https://github.com/pakzan/AllforOne/blob/master/readme_pic/QR.png) ![food](https://github.com/pakzan/AllforOne/blob/master/readme_pic/food.png) ![lifestyle](https://github.com/pakzan/AllforOne/blob/master/readme_pic/lifestyle.png)
+![QR, food and lifestyle](https://github.com/pakzan/AllforOne/blob/master/readme_pic/QR.png)
 > Figure 3: Features for ​ QR Matriculation Card​ , ​ Food Pre-Ordering​ and Lifestyle Tracker
 
 ## Clinic Services - 
@@ -42,7 +42,7 @@ To check the **real-time** location of buses. We integrate the famous bus tracki
 ## Library Functions & Booking Facilities - 
 Shorten the time of facilities checking, booking at anywhere, anytime. With this app, you could land on any NTU services in just one click.
 
-![clinic](https://github.com/pakzan/AllforOne/blob/master/readme_pic/clinic.png) ![library](https://github.com/pakzan/AllforOne/blob/master/readme_pic/library.png) ![bus](https://github.com/pakzan/AllforOne/blob/master/readme_pic/bus.png)
+![clinic, library and bus](https://github.com/pakzan/AllforOne/blob/master/readme_pic/clinic.png) 
 > Figure 4: Features for ​ Clinic Services, Library Functions & Booking Facilities ​ and ​ Bus Services
 
 ## Event Application - 
