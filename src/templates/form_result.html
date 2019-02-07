@@ -2,33 +2,89 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1.0">
-	<title>Food Preorder @ NTU</title>
-	<link rel="shortcut icon" type="image/x-icon" href="{{url_for('static', filename='/img/icon.jpg')}}" />
-<link href="{{url_for('static', filename='main.css')}}" rel="stylesheet"></head>
-<style>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="icon" href="">
+	<!-- development version, includes helpful console warnings -->
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+	<link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+	<script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue-onsenui@2.6.2/dist/vue-onsenui.min.js"></script>
+	<script src="https://www.chartjs.org/dist/2.7.3/Chart.bundle.js"></script>
+	<script src="https://www.chartjs.org/samples/latest/utils.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 
-a{
-            text-decoration: none;
-            color:#1E88E5;
-        }
-        a:visited {color:#1E88E5;}</style>
+	<script>
+		ons.platform.select('android')
+	</script>
+
+	<title>Smart Campus</title>
+	<style>
+		a {
+			text-decoration: none;
+			color: #1E88E5;
+		}
+
+		a:visited {
+			color: #1E88E5;
+		}
+	</style>
+</head>
+<style>
+	a {
+		text-decoration: none;
+		color: #1E88E5;
+	}
+
+	a:visited {
+		color: #1E88E5;
+	}
+</style>
+
 <body>
-	<div class="login-page">
-		<div class="form">
-			<form class="login-form" method="GET" action={{route}}>
-				<h2>{{result}}</h2>
-				<br/>
-				<p>{{msg}}</p>
-				<br/>
-				<a style="" href='../'>Back</a>
-			</form>
-		</div>
-	</div>
-	<script type="text/javascript" src="{{url_for('static', filename='index.js')}}"></script>
-	<script type="text/javascript" src="{{url_for('static', filename='signup.js')}}"></script>
-	<script type="text/javascript" src="{{url_for('static', filename='login.js')}}"></script>
+	<template id="main">
+		<v-ons-page>
+			<v-ons-modal :visible="true">
+				<div class="center">
+					<div class="alert-dialog-mask alert-dialog-mask--material"></div>
+					<div class="alert-dialog alert-dialog--material">
+						<div class="alert-dialog-container alert-dialog-container--material">
+							<div class="alert-dialog-title alert-dialog-title--material">
+								{{result}}
+							</div>
+							<div class="alert-dialog-content alert-dialog-content--material">
+								<p>{{msg}}</p>
+								<br />
+							</div>
+							<div class="alert-dialog-footer alert-dialog-footer--material">
+								<a href='../' class="alert-dialog-button alert-dialog-button--material">Back</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</v-ons-modal>
+		</v-ons-page>
+	</template>
+
+	<div id="app"></div>
+	<script>
+		Vue.options.delimiters = ["[[", "]]"]
+
+		new Vue({
+			el: '#app',
+			template: '#main',
+			data() {
+				return {
+				};
+			}
+		});
+	</script>
 </body>
 
 </html>
