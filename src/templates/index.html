@@ -79,6 +79,12 @@
                             </div>
                             <div class="center">NTU Map</div>
                         </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'LifestyleTrack'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['LifestyleTrack']" alt="Icon">
+                            </div>
+                            <div class="center">Lifestyle Input</div>
+                        </v-ons-list-item>
                         <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Lifestyle'; openSide = false">
                             <div class="left">
                                 <img class="list-item__thumbnail" :src="imgsrc['Lifestyle']" alt="Icon">
@@ -569,6 +575,26 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </v-ons-page>
+    </template>
+
+    <template id="lifestyletrack">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <div>
+                <div class="form">
+                    <form class="login-form" method="POST" action="/lifestyletrack">
+                        <br/>
+                        <input type="datetime-local" id="datetime" name="timestamp" />
+                        <input type="text" placeholder="Location" name="location" />
+                        <input type="text" placeholder="Activity" name="activity" />
+                        <input type="textarea" placeholder="Activity Description" name="description" />
+                        <input type="checkbox" id="hasPurchase" style="width: min-content;"> Has Expenses?</input>
+                        <input type="number" id="purchase" min="0.00" step="0.10" name="purchase" value = "0.00" style="display:none"/>
+                        <button>create</button>
+                    </form>
                 </div>
             </div>
         </v-ons-page>
