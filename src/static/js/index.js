@@ -163,6 +163,7 @@ const foodPage = {
           if (response.data['is_consume']) {
             alert('Balance remaining: ' + response.data['balance'])
             me.get();
+            me.items.length = 0;
             for(i=0; i<response.data['history'].length; i++){
                 me.items.push({
                     timestamp: response.data['history'][i]['timestamp'],
@@ -566,7 +567,7 @@ app = new Vue({
         Clinic: 'static/src/clinic.png',
         Fault: 'static/src/faulty.png',
         Map: 'static/src/map.png',
-        Topup: 'static/src/food.png'
+        Topup: 'static/src/topup.png'
       },
       openSide: false
     };
