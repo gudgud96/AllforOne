@@ -629,16 +629,12 @@
                         Recent Expenses
                     </div>
                     <ons-row class="content">
-                        <br>
-                        <ons-col width="60%">Coffee
-                        </ons-col>
-                        <ons-col width="40%" style="text-align: right">$5.50
-                        </ons-col>
-                        <br><br>
-                        <ons-col width="60%">Coffee
-                        </ons-col>
-                        <ons-col width="40%" style="text-align: right">$4.60
-                        </ons-col>
+                        <ons-row v-for="expense in expenses" style="margin-top: 5%">
+                            <ons-col width="60%">[[ expense.activity ]]
+                            </ons-col>
+                            <ons-col width="40%" style="text-align: right">[[ expense.purchase ]]
+                            </ons-col>
+                        </ons-row>
                     </ons-row>
                 </v-ons-card>
 
@@ -647,10 +643,10 @@
                         Recent Activities
                     </div>
                     <ons-row class="content">
-                        <br>
-                        <ons-col width="100%">Coding Competition</ons-col>
-                        <br><br>
-                        <ons-col width="100%">Marathon</ons-col>
+                        <ons-row v-for="activity in activities" style="margin-top: 5%">
+                            <ons-col width="100%">[[ activity.activity ]]
+                            </ons-col>
+                        </ons-row>
                     </ons-row>
                 </v-ons-card>
             </v-ons-card>

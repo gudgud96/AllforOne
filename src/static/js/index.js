@@ -385,10 +385,33 @@ const lifestylePage = {
   props: ['toggleMenu', 'payMenu', 'title', 'titlefull'],
   data() {
     return {
+      expenses: [],
+      activities: [],
+      monthly: [0,0,0,0,0,0,0,0,0,0,0,0]
     }
   },
   components: { customToolbar },
   methods: {
+    get: function () {
+      axios
+        .get('/lifestyleshow')
+        .then(response => {
+          results = response.data
+          this.expenses = results[0]
+          this.activities = results[1]
+
+          for (i = 0; i < this.expenses.length; i++) {
+            date = new Date(this.expenses[i]['timestamp']);
+            this.monthly[date.getMonth()]++;
+          }
+          this.createChart()
+          console.log(this.monthly)
+          console.log(results)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     createChart: function () {
       window.chartColors = {
         red: 'rgb(255, 99, 132)',
@@ -456,20 +479,12 @@ const lifestylePage = {
       var config = {
         type: 'line',
         data: {
-          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+          labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
           datasets: [{
             label: 'Expenses',
             backgroundColor: window.chartColors.red,
             borderColor: window.chartColors.red,
-            data: [
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor(),
-              randomScalingFactor()
-            ],
+            data: this.monthly,
             fill: true,
           }]
         },
@@ -513,7 +528,7 @@ const lifestylePage = {
   },
   mounted: function () {
     this.$nextTick(function () {
-      this.createChart()
+      this.get()
     })
   }
 };
