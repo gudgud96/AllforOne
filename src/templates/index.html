@@ -18,6 +18,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-1.8.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 
     <script>
         ons.platform.select('android')
@@ -59,6 +60,12 @@
                                 <img class="list-item__thumbnail" :src="imgsrc['Food']" alt="Icon">
                             </div>
                             <div class="center">Food Payment</div>
+                        </v-ons-list-item>
+                        <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Topup'; openSide = false">
+                            <div class="left">
+                                <img class="list-item__thumbnail" :src="imgsrc['Topup']" alt="Icon">
+                            </div>
+                            <div class="center">Wallet Topup</div>
                         </v-ons-list-item>
                         <v-ons-list-item tappable modifier="chevron" @click="currentPage = 'Bus'; openSide = false">
                             <div class="left">
@@ -144,6 +151,29 @@
                         </div>
                     </ons-col>
                 </ons-row>
+            </v-ons-card>
+        </v-ons-page>
+    </template>
+
+    <template id="topup">
+        <v-ons-page>
+            <custom-toolbar :title="titlefull[title]" :action="toggleMenu" :pay="payMenu"></custom-toolbar>
+            <v-ons-card>
+                <form class="login-form" method="POST" action="/topup">
+                    <h2>Credit Top Up @ NTU</h2>
+                    <br />
+                    <p>Select your topup amount.</p>
+                    <br />
+                    <select type="text" placeholder="Amount" name="amount" id="amount">
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                    <br />
+                    <button>Top Up</button>
+                </form>
             </v-ons-card>
         </v-ons-page>
     </template>
@@ -295,15 +325,15 @@
                     <option value="McDonald's">McDonald's</option>
                     <option value="Canteen 2">Canteen 2</option>
                 </select>
-                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name" id="food_name">
+                <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name"
+                    id="food_name">
                     <option value="Chicken Rice">Chicken Rice</option>
                     <option value="Salad">Salad</option>
                     <option value="Mixed Rice">Mixed Rice</option>
                     <option value="Pan Mee">Pan Mee</option>
                     <option value="Vegetarian">Vegetarian</option>
                 </select>
-                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount"
-                    id="amount">
+                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
                     <option v-for="n in 10" :value="n">[[ n ]]</option>
                 </select>
                 <p>Price: - SGD [[ price.toFixed(2) ]] </p>
@@ -649,6 +679,40 @@
                     </form>
                 </div>
             </v-ons-card>
+            <v-ons-card>
+                <div class="title">
+                    Fault Reporting Status
+                </div>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Fault Location</th>
+                            <!-- <th>Description</th> -->
+                            <th>Type of Fault</th>
+                            <th>Status</th>
+                            <!-- <th>Completed</th> -->
+                            <th>Taken time / Elapsed time</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tr v-for="item in faultList">
+                        <td>[[ item.fault_location ]]</td>
+                        <!-- <td>[[ item.fault_description ]]</td> -->
+                        <td>[[ item.fault_type ]]</td>
+                        <td>[[ item.fault_status ]]</td>
+                        <!-- <td>[[ item.fault_completed ]]</td> -->
+                        <td>[[ item.fault_taken_time ]]</td>
+                        <td><a :href="'http://maps.ntu.edu.sg/maps#q:' + item.fault_location"
+                                target="_blank">View on NTU Map</a></td>
+                    </tr>
+                </table>
+
+                <h3>Average time for solving a request: 10 Hours</h3>
+                <p>For faster response, please call 67904777</p>
+                <div id="container" style="width:100%; height:400px;">
+
+                </div>
+            </v-ons-card>
         </v-ons-page>
     </template>
 
@@ -691,7 +755,9 @@
             </v-ons-card>
         </v-ons-page>
     </template>
+
     <div id="app"></div>
+
     <script src="static/js/index.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
     </script>
