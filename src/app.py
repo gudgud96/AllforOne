@@ -383,9 +383,27 @@ def update_activity():
     return render_template('lifestyletrack.html')
 
 
-@app.route('/lifestyleshow')
+@app.route('/lifestyleshow', methods=['GET'])
 def lifestyleshow():
-    return render_template('lifestyleShow.html')
+    results = UserTracker.query.filter_by(user_id=session["user_id"]).all()
+    
+    output_expen = []
+    output_acti = []
+    for result in results:
+        output_dict = dict()
+        purchase = "{:.2f}".format(result.purchase)
+        output_dict['timestamp'] = result.timestamp.strftime("%Y-%m-%d %H:%M:%S")
+        output_dict['location'] = result.location
+        output_dict['activity'] = result.activity
+        output_dict['purchase'] = purchase
+        
+        if purchase == '-1.00':
+            output_acti.append(output_dict)
+        else:
+            output_expen.append(output_dict)
+            
+    print(output_expen, output_acti)
+    return json.dumps([output_expen, output_acti])
 
 
 @app.route('/heatmap')
