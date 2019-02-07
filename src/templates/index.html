@@ -325,6 +325,7 @@
                     <option value="McDonald's">McDonald's</option>
                     <option value="Canteen 2">Canteen 2</option>
                 </select>
+                <br />
                 <select class="select-input select-input--material" type="text" placeholder="Food Name" name="food_name"
                     id="food_name">
                     <option value="Chicken Rice">Chicken Rice</option>
@@ -333,11 +334,13 @@
                     <option value="Pan Mee">Pan Mee</option>
                     <option value="Vegetarian">Vegetarian</option>
                 </select>
-                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount">
+                <br />
+                <select class="select-input select-input--material" type="text" placeholder="Amount" name="amount" id="amount" v-model="amount">
                     <option v-for="n in 10" :value="n">[[ n ]]</option>
                 </select>
+                <br />
                 <p>Price: - SGD [[ price.toFixed(2) ]] </p>
-                <input class="text-input text-input--material" name="price" id="price" v-model="price">
+                <input style="display:none;" class="text-input text-input--material" name="price" id="price" v-model="price">
                 <br />
                 <button class="button button--material" @click="post">Create</button>
             </v-ons-card>
