@@ -446,6 +446,7 @@ const lifestylePage = {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           title: {
             display: true,
             text: 'Most Visited Location'
@@ -490,6 +491,7 @@ const lifestylePage = {
         },
         options: {
           responsive: true,
+          maintainAspectRatio: false,
           title: {
             display: true,
             text: 'Monthly Expenses'
@@ -618,6 +620,8 @@ app = new Vue({
   data() {
     return {
       currentPage: 'Home',
+      main_name: "Chong Bing Sheng",
+      main_matric: "U1500034F",
       pages: {
         Home: 'Home',
         Food: 'Food Payment',
@@ -631,9 +635,7 @@ app = new Vue({
         Fault: 'Fault Reporting',
         Profile: 'Profile',
         Event: 'Event Description',
-        Topup: 'Wallet Topup',
-        main_name: "Chong Bing Sheng",
-        main_matric: "U1500034F"
+        Topup: 'Wallet Topup'
       },
       imgsrc: {
         Home: 'static/src/event.png',
