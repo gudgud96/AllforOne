@@ -306,8 +306,6 @@ const profilePage = {
           me.name = response.data['name']
           me.email = response.data['email']
           me.credit_amount = response.data['credit_amount']
-
-$('#qrcode').qrcode(me.user_id);
         })
         .catch(error => {
           console.log(error)
