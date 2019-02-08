@@ -743,7 +743,7 @@
             <v-ons-card>
                 <h2>Your Profile Page</h2>
                 <br />
-                <img style="width:200px;height:200px;border:0;" src="{{url_for('static', filename='image.png')}}">
+                <div id="qrcode" style="width:200px;height:200px;border:0;"></div>
                 <p>This is your Matric Card's QR code.</p>
                 <br />
                 <p>Scan here to take attendance, access school facilities, make payments, etc.</p>
@@ -763,8 +763,13 @@
 
     <div id="app"></div>
 
+<script type="text/javascript" src="static/jquery.qrcode.js"></script>
+<script type="text/javascript" src="static/qrcode.js"></script>
     <script src="static/js/index.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDplAoTvBnBsFlbMJiVAr3KlpTy54g_ULU&libraries=visualization&callback=initMap">
+    </script>
+<script> 
+        $('#qrcode').qrcode("this plugin is great");
     </script>
 </body>
 
